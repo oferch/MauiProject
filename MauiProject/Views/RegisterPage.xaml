@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ViewModels="clr-namespace:MauiProject.ViewModels"
              x:Class="MauiProject.Views.RegisterPage"
-             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource Key=PageBackgroundDark}, Light={StaticResource Key=PageBackgroundLight}}"
              Shell.NavBarIsVisible="False"
              Title="RegisterPage">
+
+	<ContentPage.BindingContext>
+		<ViewModels:RegisterPageViewModel/>
+	</ContentPage.BindingContext>
 
     <ScrollView>
         <VerticalStackLayout Spacing="0">
@@ -13,15 +18,14 @@
                 <ImageButton Source="arrow_back.png" 
                              HeightRequest="24" 
                              HorizontalOptions="Start"
-                             BackgroundColor="Transparent">
-                </ImageButton>
+                             BackgroundColor="Transparent"/>
                 <Label Grid.Column="1" 
                        Text="Registration" 
                        FontSize="18" 
                        FontAttributes="Bold" 
                        HorizontalOptions="Center" 
                        VerticalOptions="Center"
-                       TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
+                       TextColor="{AppThemeBinding Dark=White, Light={StaticResource Key=TextPrimary}}"/>
             </Grid>
 
             <Border Margin="16, 8"
@@ -37,10 +41,10 @@
                 <Label Text="Create Account" 
                        FontSize="32" 
                        FontAttributes="Bold" 
-                       TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
+                       TextColor="{AppThemeBinding Dark=White, Light={StaticResource Key=TextPrimary}}"/>
                 <Label Text="Please fill in the details below to get started." 
                        FontSize="16" 
-                       TextColor="{StaticResource TextSecondary}"/>
+                       TextColor="{StaticResource Key=TextSecondary}"/>
             </VerticalStackLayout>
 
             <VerticalStackLayout Padding="20, 0" Spacing="20">
@@ -49,13 +53,14 @@
                     <Label Text="Full Name" 
                            FontSize="14" 
                            FontAttributes="Bold" 
-                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
-                    <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                           TextColor="{AppThemeBinding Dark=White, Light={StaticResource Key=TextPrimary}}"/>
+                    <Border Stroke="{AppThemeBinding Dark={StaticResource Key=BorderDark}, Light={StaticResource Key=BorderLight}}"
                             StrokeShape="RoundRectangle 8" 
                             Padding="12, 0">
                         <Entry x:Name="FullNameEntry"
+                               Text="{Binding FullName}"
                                Placeholder="Enter your full name" 
-                               Style="{StaticResource LoginEntryStyle}"/>
+                               Style="{StaticResource Key=LoginEntryStyle}"/>
                     </Border>
                     <Label Text="Please enter your legal name"
                            FontSize="12"
@@ -67,13 +72,14 @@
                     <Label Text="Username" 
                            FontSize="14" 
                            FontAttributes="Bold" 
-                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
-                    <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                           TextColor="{AppThemeBinding Dark=White, Light={StaticResource Key=TextPrimary}}"/>
+                    <Border Stroke="{AppThemeBinding Dark={StaticResource Key=BorderDark}, Light={StaticResource Key=BorderLight}}"
                             StrokeShape="RoundRectangle 8" 
                             Padding="12, 0">
                         <Entry x:Name="UsernameEntry"
+                               Text="{Binding UserName}"
                                Placeholder="johndoe123" 
-                               Style="{StaticResource LoginEntryStyle}"/>
+                               Style="{StaticResource Key=LoginEntryStyle}"/>
                     </Border>
                     <Label Text="Username is already taken"
                            FontSize="12"
@@ -85,14 +91,15 @@
                     <Label Text="Email" 
                            FontSize="14" 
                            FontAttributes="Bold" 
-                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
-                    <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                           TextColor="{AppThemeBinding Dark=White, Light={StaticResource Key=TextPrimary}}"/>
+                    <Border Stroke="{AppThemeBinding Dark={StaticResource Key=BorderDark}, Light={StaticResource Key=BorderLight}}"
                             StrokeShape="RoundRectangle 8" 
                             Padding="12, 0">
                         <Entry x:Name="EmailEntry"
                                Placeholder="hello@example.com" 
                                Keyboard="Email"
-                               Style="{StaticResource LoginEntryStyle}"/>
+                               Text="{Binding Email}"
+                               Style="{StaticResource Key=LoginEntryStyle}"/>
                     </Border>
                 </VerticalStackLayout>
 
@@ -100,14 +107,15 @@
                     <Label Text="Phone Number" 
                            FontSize="14" 
                            FontAttributes="Bold" 
-                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
-                    <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                           TextColor="{AppThemeBinding Dark=White, Light={StaticResource Key=TextPrimary}}"/>
+                    <Border Stroke="{AppThemeBinding Dark={StaticResource Key=BorderDark}, Light={StaticResource Key=BorderLight}}"
                             StrokeShape="RoundRectangle 8" 
                             Padding="12, 0">
                         <Entry x:Name="PhoneEntry"
                                Placeholder="+1 (555) 000-0000" 
                                Keyboard="Telephone"
-                               Style="{StaticResource LoginEntryStyle}"/>
+                               Text="{Binding Phone}"
+                               Style="{StaticResource Key=LoginEntryStyle}"/>
                     </Border>
                 </VerticalStackLayout>
 
@@ -115,15 +123,16 @@
                     <Label Text="Password" 
                            FontSize="14" 
                            FontAttributes="Bold" 
-                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
-                    <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                           TextColor="{AppThemeBinding Dark=White, Light={StaticResource Key=TextPrimary}}"/>
+                    <Border Stroke="{AppThemeBinding Dark={StaticResource Key=BorderDark}, Light={StaticResource Key=BorderLight}}"
                             StrokeShape="RoundRectangle 8" 
                             Padding="12, 0">
                         <Grid ColumnDefinitions="*, Auto">
                             <Entry x:Name="PasswordEntry"
                                    Placeholder="Min. 8 characters" 
                                    IsPassword="True" 
-                                   Style="{StaticResource LoginEntryStyle}"/>
+                                   Text="{Binding Password}"
+                                   Style="{StaticResource Key=LoginEntryStyle}"/>
                             <ImageButton Grid.Column="1" 
                                          x:Name="TogglePasswordButton"
                                          Source="visibility.png" 
@@ -138,23 +147,24 @@
                     <Label Text="Date of Birth" 
                            FontSize="14" 
                            FontAttributes="Bold" 
-                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
+                           TextColor="{AppThemeBinding Dark=White, Light={StaticResource Key=TextPrimary}}"/>
 
                     <Grid ColumnDefinitions="*, Auto" ColumnSpacing="16">
-                        <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                        <Border Stroke="{AppThemeBinding Dark={StaticResource Key=BorderDark}, Light={StaticResource Key=BorderLight}}"
                                 StrokeShape="RoundRectangle 8" 
                                 Padding="12, 0"
                                 HeightRequest="56">
                             <DatePicker x:Name="DobPicker"
                                         DateSelected="OnDateOfBirthSelected"
                                         Format="MM/dd/yyyy"
-                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"
+                                        Date="{Binding DateOfBirth}"
+                                        TextColor="{AppThemeBinding Dark=White, Light={StaticResource Key=TextPrimary}}"
                                         VerticalOptions="Center"/>
                         </Border>
 
                         <Border Grid.Column="1"
                                 BackgroundColor="#103985EF"
-                                Stroke="{AppThemeBinding Light={StaticResource PrimaryBlue}, Dark={StaticResource PrimaryBlue}}"
+                                Stroke="{AppThemeBinding Dark={StaticResource Key=PrimaryBlue}, Light={StaticResource Key=PrimaryBlue}}"
                                 StrokeThickness="1"
                                 StrokeShape="RoundRectangle 8"
                                 HeightRequest="56"
@@ -163,13 +173,13 @@
                                 <Label Text="AGE" 
                                        FontSize="10" 
                                        FontAttributes="Bold"
-                                       TextColor="{StaticResource PrimaryBlue}" 
+                                       TextColor="{StaticResource Key=PrimaryBlue}" 
                                        HorizontalOptions="Center"/>
                                 <Label x:Name="AgeLabel"
-                                       Text="25" 
+                                       Text="{Binding Age}" 
                                        FontSize="20" 
                                        FontAttributes="Bold"
-                                       TextColor="{StaticResource PrimaryBlue}" 
+                                       TextColor="{StaticResource Key=PrimaryBlue}" 
                                        HorizontalOptions="Center"
                                        Margin="0,-4,0,0"/>
                             </VerticalStackLayout>
@@ -178,15 +188,16 @@
                 </VerticalStackLayout>
 
                 <Button Text="Register" 
-                        Style="{StaticResource PrimaryButtonStyle}"
+                        Style="{StaticResource Key=PrimaryButtonStyle}"
                         Margin="0, 16, 0, 0"
+                        IsEnabled="{Binding IsReady}"
                         Clicked="OnRegisterClicked"/>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Padding="0, 20, 0, 60">
-                    <Label Text="Already have an account?" FontSize="14" TextColor="{StaticResource TextSecondary}"/>
+                    <Label Text="Already have an account?" FontSize="14" TextColor="{StaticResource Key=TextSecondary}"/>
                     <Button Text="Sign In" 
                             FontAttributes="Bold" 
-                            TextColor="{StaticResource PrimaryBlue}" 
+                            TextColor="{StaticResource Key=PrimaryBlue}" 
                             BackgroundColor="Transparent" 
                             Padding="5, 0"
                             FontSize="14"

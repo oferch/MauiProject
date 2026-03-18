@@ -22,7 +22,7 @@ namespace MauiProject.Models
                 if (id != value)
                 {
                     id = value;
-                    OnPopertyChanged();
+                    OnPropertyChanged();
                 }
             }
         }
@@ -34,7 +34,7 @@ namespace MauiProject.Models
                 if (userName != value)
                 {
                     userName = value;
-                    OnPopertyChanged();
+                    OnPropertyChanged();
                 }
             }
         }
@@ -46,7 +46,7 @@ namespace MauiProject.Models
                 if (password != value)
                 {
                     password = value;
-                    OnPopertyChanged();
+                    OnPropertyChanged();
                 }
             }
         }
@@ -58,7 +58,7 @@ namespace MauiProject.Models
                 if (firstName != value)
                 {
                     firstName = value;
-                    OnPopertyChanged();
+                    OnPropertyChanged();
                 }
             }
         }
@@ -70,7 +70,7 @@ namespace MauiProject.Models
                 if (lastName != value)
                 {
                     lastName = value;
-                    OnPopertyChanged();
+                    OnPropertyChanged();
                 }
             }
         }
