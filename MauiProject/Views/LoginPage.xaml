@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiProject.Views.LoginPage"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0">
+
+            <Grid ColumnDefinitions="48, *, 48" Padding="16, 12">
+                <ImageButton Source="arrow_back.png" 
+                             HeightRequest="24" 
+                             HorizontalOptions="Start"
+                             BackgroundColor="Transparent">
+                    <ImageButton.Behaviors>
+                    </ImageButton.Behaviors>
+                </ImageButton>
+                <Label Grid.Column="1" 
+                       Text="Login" 
+                       FontSize="18" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center"
+                       TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
+            </Grid>
+
+            <Border Margin="16, 8"
+                    StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    HeightRequest="240">
+                <Grid>
+                    <Image Source="login_hero_bg.png" Aspect="AspectFill"/>
+
+                    <Border HeightRequest="90" 
+                            WidthRequest="90" 
+                            StrokeShape="RoundRectangle 45"
+                            BackgroundColor="#40FFFFFF" 
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            StrokeThickness="1"
+                            Stroke="White">
+                        <Image Source="rocket_icon.png" 
+                               HeightRequest="45" 
+                               HorizontalOptions="Center" 
+                               VerticalOptions="Center"/>
+                    </Border>
+
+                    <Border HeightRequest="90" 
+                        WidthRequest="90" 
+                        StrokeShape="RoundRectangle 45"
+                        BackgroundColor="#30FFFFFF" 
+                        Stroke="White"
+                        StrokeThickness="1">
+                         <Label Text="&#xe8af;" 
+                           FontFamily="MaterialIcons" 
+                           FontSize="40" 
+                           TextColor="White" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <VerticalStackLayout Padding="20, 24, 20, 16" Spacing="4">
+                <Label Text="Welcome Back" 
+                       FontSize="26" 
+                       FontAttributes="Bold" 
+                       TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
+                <Label Text="Please enter your credentials to continue" 
+                       FontSize="16" 
+                       TextColor="{StaticResource TextSecondary}"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Padding="20, 0" Spacing="18">
+
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Username or Email" 
+                           FontSize="14" 
+                           FontAttributes="Bold" 
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
+                    <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                            StrokeShape="RoundRectangle 8" 
+                            Padding="12, 0">
+                        <Entry x:Name="EmailEntry"
+                               Placeholder="Enter your email" 
+                               Style="{StaticResource LoginEntryStyle}"
+                               Keyboard="Email"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Password" 
+                           FontSize="14" 
+                           FontAttributes="Bold" 
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
+                    <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                            StrokeShape="RoundRectangle 8" 
+                            Padding="12, 0">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Entry x:Name="PasswordEntry"
+                                   Placeholder="Enter your password" 
+                                   IsPassword="True" 
+                                   Style="{StaticResource LoginEntryStyle}"/>
+                            <ImageButton Grid.Column="1" 
+                                         x:Name="TogglePasswordButton"
+                                         Source="visibility.png" 
+                                         HeightRequest="20" 
+                                         BackgroundColor="Transparent"
+                                         Clicked="OnTogglePasswordClicked"/>
+                        </Grid>
+                    </Border>
+
+                    <Button Text="Forgot password?" 
+                            TextColor="{StaticResource PrimaryBlue}" 
+                            FontSize="14" 
+                            BackgroundColor="Transparent"
+                            HorizontalOptions="End"
+                            Padding="0"
+                            Margin="0, -5, 0, 0"/>
+                </VerticalStackLayout>
+
+                <Button Text="Login" 
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Margin="0, 10, 0, 0"
+                        Clicked="OnLoginClicked"/>
+
+                <Grid ColumnDefinitions="*, Auto, *" ColumnSpacing="12" Margin="0, 10">
+                    <BoxView HeightRequest="1" BackgroundColor="{StaticResource BorderLight}" VerticalOptions="Center"/>
+                    <Label Grid.Column="1" Text="Or continue with" FontSize="13" TextColor="{StaticResource TextSecondary}"/>
+                    <BoxView Grid.Column="2" HeightRequest="1" BackgroundColor="{StaticResource BorderLight}" VerticalOptions="Center"/>
+                </Grid>
+
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="16">
+                    <Border Stroke="{StaticResource BorderLight}" StrokeShape="RoundRectangle 8" HeightRequest="52">
+                        <Image Source="google_logo.png" HeightRequest="20" HorizontalOptions="Center"/>
+                    </Border>
+                    <Border Grid.Column="1" Stroke="{StaticResource BorderLight}" StrokeShape="RoundRectangle 8" HeightRequest="52">
+                        <Image Source="facebook_logo_primary.png" HeightRequest="20" HorizontalOptions="Center"/>
+                    </Border>
+                </Grid>
+
+                <HorizontalStackLayout HorizontalOptions="Center" Padding="0, 20, 0, 40">
+                    <Label Text="Don't have an account?" FontSize="14" TextColor="{StaticResource TextSecondary}"/>
+                    <Button Text="Sign up" 
+                            FontAttributes="Bold" 
+                            TextColor="{StaticResource PrimaryBlue}" 
+                            BackgroundColor="Transparent" 
+                            Padding="5, 0"
+                            FontSize="14"/>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

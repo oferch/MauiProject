@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiProject.Views.RegisterPage"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}"
+             Shell.NavBarIsVisible="False"
+             Title="RegisterPage">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0">
+
+            <Grid ColumnDefinitions="48, *, 48" Padding="16, 12">
+                <ImageButton Source="arrow_back.png" 
+                             HeightRequest="24" 
+                             HorizontalOptions="Start"
+                             BackgroundColor="Transparent">
+                </ImageButton>
+                <Label Grid.Column="1" 
+                       Text="Registration" 
+                       FontSize="18" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center"
+                       TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
+            </Grid>
+
+            <Border Margin="16, 8"
+                    StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    HeightRequest="260">
+                <Grid>
+                    <Image Source="registration_hero_bg.png" Aspect="AspectFill"/>
+                </Grid>
+            </Border>
+
+            <VerticalStackLayout Padding="20, 24, 20, 16" Spacing="4">
+                <Label Text="Create Account" 
+                       FontSize="32" 
+                       FontAttributes="Bold" 
+                       TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
+                <Label Text="Please fill in the details below to get started." 
+                       FontSize="16" 
+                       TextColor="{StaticResource TextSecondary}"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Padding="20, 0" Spacing="20">
+
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Full Name" 
+                           FontSize="14" 
+                           FontAttributes="Bold" 
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
+                    <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                            StrokeShape="RoundRectangle 8" 
+                            Padding="12, 0">
+                        <Entry x:Name="FullNameEntry"
+                               Placeholder="Enter your full name" 
+                               Style="{StaticResource LoginEntryStyle}"/>
+                    </Border>
+                    <Label Text="Please enter your legal name"
+                           FontSize="12"
+                           TextColor="#EF4444"
+                           Padding="4,0,0,0"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Username" 
+                           FontSize="14" 
+                           FontAttributes="Bold" 
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
+                    <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                            StrokeShape="RoundRectangle 8" 
+                            Padding="12, 0">
+                        <Entry x:Name="UsernameEntry"
+                               Placeholder="johndoe123" 
+                               Style="{StaticResource LoginEntryStyle}"/>
+                    </Border>
+                    <Label Text="Username is already taken"
+                           FontSize="12"
+                           TextColor="#EF4444"
+                           Padding="4,0,0,0"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Email" 
+                           FontSize="14" 
+                           FontAttributes="Bold" 
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
+                    <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                            StrokeShape="RoundRectangle 8" 
+                            Padding="12, 0">
+                        <Entry x:Name="EmailEntry"
+                               Placeholder="hello@example.com" 
+                               Keyboard="Email"
+                               Style="{StaticResource LoginEntryStyle}"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Phone Number" 
+                           FontSize="14" 
+                           FontAttributes="Bold" 
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
+                    <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                            StrokeShape="RoundRectangle 8" 
+                            Padding="12, 0">
+                        <Entry x:Name="PhoneEntry"
+                               Placeholder="+1 (555) 000-0000" 
+                               Keyboard="Telephone"
+                               Style="{StaticResource LoginEntryStyle}"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Password" 
+                           FontSize="14" 
+                           FontAttributes="Bold" 
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
+                    <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                            StrokeShape="RoundRectangle 8" 
+                            Padding="12, 0">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Entry x:Name="PasswordEntry"
+                                   Placeholder="Min. 8 characters" 
+                                   IsPassword="True" 
+                                   Style="{StaticResource LoginEntryStyle}"/>
+                            <ImageButton Grid.Column="1" 
+                                         x:Name="TogglePasswordButton"
+                                         Source="visibility.png" 
+                                         HeightRequest="20" 
+                                         BackgroundColor="Transparent"
+                                         Clicked="OnTogglePasswordClicked"/>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Date of Birth" 
+                           FontSize="14" 
+                           FontAttributes="Bold" 
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"/>
+
+                    <Grid ColumnDefinitions="*, Auto" ColumnSpacing="16">
+                        <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                                StrokeShape="RoundRectangle 8" 
+                                Padding="12, 0"
+                                HeightRequest="56">
+                            <DatePicker x:Name="DobPicker"
+                                        DateSelected="OnDateOfBirthSelected"
+                                        Format="MM/dd/yyyy"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark=White}"
+                                        VerticalOptions="Center"/>
+                        </Border>
+
+                        <Border Grid.Column="1"
+                                BackgroundColor="#103985EF"
+                                Stroke="{AppThemeBinding Light={StaticResource PrimaryBlue}, Dark={StaticResource PrimaryBlue}}"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 8"
+                                HeightRequest="56"
+                                WidthRequest="60">
+                            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                <Label Text="AGE" 
+                                       FontSize="10" 
+                                       FontAttributes="Bold"
+                                       TextColor="{StaticResource PrimaryBlue}" 
+                                       HorizontalOptions="Center"/>
+                                <Label x:Name="AgeLabel"
+                                       Text="25" 
+                                       FontSize="20" 
+                                       FontAttributes="Bold"
+                                       TextColor="{StaticResource PrimaryBlue}" 
+                                       HorizontalOptions="Center"
+                                       Margin="0,-4,0,0"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <Button Text="Register" 
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Margin="0, 16, 0, 0"
+                        Clicked="OnRegisterClicked"/>
+
+                <HorizontalStackLayout HorizontalOptions="Center" Padding="0, 20, 0, 60">
+                    <Label Text="Already have an account?" FontSize="14" TextColor="{StaticResource TextSecondary}"/>
+                    <Button Text="Sign In" 
+                            FontAttributes="Bold" 
+                            TextColor="{StaticResource PrimaryBlue}" 
+                            BackgroundColor="Transparent" 
+                            Padding="5, 0"
+                            FontSize="14"
+                            Clicked="OnSignInClicked"/>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>    
