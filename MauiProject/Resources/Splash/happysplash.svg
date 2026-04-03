@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="90" fill="#3498db" />
+  
+  <circle cx="100" cy="90" r="40" fill="#ffffff" />
+  
+  <path d="M80 100 Q100 120 120 100" 
+        stroke="#3498db" 
+        stroke-width="6" 
+        fill="none" 
+        stroke-linecap="round" />
+        
+  <circle cx="85" cy="85" r="5" fill="#3498db" />
+  <circle cx="115" cy="85" r="5" fill="#3498db" />
+  
+  <path d="M40 140 Q40 120 60 120 Q70 120 80 130 Q90 110 110 110 Q130 110 140 130 Q160 130 160 150 L40 150 Z" 
+        fill="white" 
+        opacity="0.8" />
+</svg>
