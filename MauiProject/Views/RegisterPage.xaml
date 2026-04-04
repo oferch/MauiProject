@@ -3,13 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ViewModels="clr-namespace:MauiProject.ViewModels"
              x:Class="MauiProject.Views.RegisterPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              BackgroundColor="{AppThemeBinding Dark={StaticResource Key=PageBackgroundDark}, Light={StaticResource Key=PageBackgroundLight}}"
              Shell.NavBarIsVisible="False"
              Title="RegisterPage">
 
-	<ContentPage.BindingContext>
-		<ViewModels:RegisterPageViewModel/>
-	</ContentPage.BindingContext>
+    <ContentPage.BindingContext>
+        <ViewModels:RegisterPageViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Red" />
+        </Style>
+        <Style x:Key="ValidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Green" />
+        </Style>
+    </ContentPage.Resources>
 
     <ScrollView>
         <VerticalStackLayout Spacing="0">
@@ -59,13 +69,9 @@
                             Padding="12, 0">
                         <Entry x:Name="FullNameEntry"
                                Text="{Binding FullName}"
-                               Placeholder="Enter your full name" 
+                               Placeholder="Enter your full name, first and last" 
                                Style="{StaticResource Key=LoginEntryStyle}"/>
                     </Border>
-                    <Label Text="Please enter your legal name"
-                           FontSize="12"
-                           TextColor="#EF4444"
-                           Padding="4,0,0,0"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Spacing="6">
@@ -78,10 +84,11 @@
                             Padding="12, 0">
                         <Entry x:Name="UsernameEntry"
                                Text="{Binding UserName}"
-                               Placeholder="johndoe123" 
+                               Placeholder="Must not start with a digit, or contain spaces E.g. johndoe123" 
                                Style="{StaticResource Key=LoginEntryStyle}"/>
                     </Border>
-                    <Label Text="Username is already taken"
+                    <Label x:Name="UsernameErrorLabel"
+                           Text=""
                            FontSize="12"
                            TextColor="#EF4444"
                            Padding="4,0,0,0"/>
@@ -99,7 +106,15 @@
                                Placeholder="hello@example.com" 
                                Keyboard="Email"
                                Text="{Binding Email}"
-                               Style="{StaticResource Key=LoginEntryStyle}"/>
+                               Style="{StaticResource Key=LoginEntryStyle}">
+                            <Entry.Behaviors>
+                                <toolkit:EmailValidationBehavior 
+                                InvalidStyle="{StaticResource InvalidEntryStyle}"
+                                ValidStyle="{StaticResource ValidEntryStyle}"
+                                Flags="ValidateOnValueChanged" />
+                            </Entry.Behaviors>
+                        </Entry>
+
                     </Border>
                 </VerticalStackLayout>
 
@@ -129,18 +144,23 @@
                             Padding="12, 0">
                         <Grid ColumnDefinitions="*, Auto">
                             <Entry x:Name="PasswordEntry"
-                                   Placeholder="Min. 8 characters" 
-                                   IsPassword="True" 
+                                   Placeholder="Min. 8 characters, One Upper case letter and one digit" 
+                                   IsPassword="{Binding IsPasswordNotVisible}" 
                                    Text="{Binding Password}"
                                    Style="{StaticResource Key=LoginEntryStyle}"/>
                             <ImageButton Grid.Column="1" 
                                          x:Name="TogglePasswordButton"
-                                         Source="visibility.png" 
+                                         Source="visibility_off.png" 
                                          HeightRequest="20" 
                                          BackgroundColor="Transparent"
                                          Clicked="OnTogglePasswordClicked"/>
                         </Grid>
                     </Border>
+                    <Label x:Name="PasswordErrorLabel"
+                           Text=""
+                           FontSize="12"
+                           TextColor="#EF4444"
+                           Padding="4,0,0,0"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Spacing="6">
@@ -185,6 +205,11 @@
                             </VerticalStackLayout>
                         </Border>
                     </Grid>
+                    <Label x:Name="AgeErrorLabel"
+                          Text=""
+                          FontSize="12"
+                          TextColor="#EF4444"
+                          Padding="4,0,0,0"/>
                 </VerticalStackLayout>
 
                 <Button Text="Register" 

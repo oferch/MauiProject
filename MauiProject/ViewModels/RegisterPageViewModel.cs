@@ -12,9 +12,23 @@ namespace MauiProject.ViewModels
         public User user = new User() { Id = 0, FirstName = "", LastName = "", Password = "", UserName = "" };
         private int age = 0;
         private string fullName = "";
+        private bool isPasswordNotVisible = true;
         private DateTime dateOfBirth = DateTime.Now;
 
-        private string password, email, phone, userName;
+        private string password = "", email = "", phone = "", userName = "";
+
+        public bool IsPasswordNotVisible
+        {
+            get => isPasswordNotVisible;
+            set
+            {
+                if (isPasswordNotVisible != value)
+                {
+                    isPasswordNotVisible = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public string Password
         {
