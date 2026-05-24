@@ -88,10 +88,8 @@
                                Style="{StaticResource Key=LoginEntryStyle}"/>
                     </Border>
                     <Label x:Name="UsernameErrorLabel"
-                           Text=""
-                           FontSize="12"
-                           TextColor="#EF4444"
-                           Padding="4,0,0,0"/>
+                           Text="{Binding UsernameError}"
+                           Style="{StaticResource Key=ErrorLabel}"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Spacing="6">
@@ -157,10 +155,8 @@
                         </Grid>
                     </Border>
                     <Label x:Name="PasswordErrorLabel"
-                           Text=""
-                           FontSize="12"
-                           TextColor="#EF4444"
-                           Padding="4,0,0,0"/>
+                           Text="{Binding PassError}"
+                           Style="{StaticResource Key=ErrorLabel}"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Spacing="6">
@@ -206,10 +202,8 @@
                         </Border>
                     </Grid>
                     <Label x:Name="AgeErrorLabel"
-                          Text=""
-                          FontSize="12"
-                          TextColor="#EF4444"
-                          Padding="4,0,0,0"/>
+                          Text="{Binding AgeError}"
+                          Style="{StaticResource Key=ErrorLabel}"/>
                 </VerticalStackLayout>
 
                 <Button Text="Register" 

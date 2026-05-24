@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using MauiProject.Models;
 
 namespace MauiProject.ViewModels
@@ -15,7 +16,7 @@ namespace MauiProject.ViewModels
         private bool isPasswordNotVisible = true;
         private DateTime dateOfBirth = DateTime.Now;
 
-        private string password = "", email = "", phone = "", userName = "";
+        private string password = "", passErr = "", ageErr = "",  userErr = "",email = "", phone = "", userName = "";
 
         public bool IsPasswordNotVisible
         {
@@ -30,6 +31,11 @@ namespace MauiProject.ViewModels
             }
         }
 
+        public string PassError
+        {
+            get => passErr;
+        }
+
         public string Password
         {
             get { return password; }
@@ -38,10 +44,27 @@ namespace MauiProject.ViewModels
                 if (password != value)
                 {
                     password = value;
+                    string pattern = @"^(?=.*[A-Z])(?=.*\d).+$";
+                    if (!Regex.IsMatch(password, pattern))
+                    {
+                        passErr = "Password Must contin an upper case letter and a digit";
+                    }
+                    else
+                    {
+                        user.Password = password;
+                        passErr = "";
+                    }
+
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(PassError));
                     OnPropertyChanged(nameof(IsReady));
                 }
             }
+        }
+
+        public string UsernameError
+        {
+            get => userErr;
         }
 
         public string UserName
@@ -52,7 +75,18 @@ namespace MauiProject.ViewModels
                 if (userName != value)
                 {
                     userName = value;
+                    if (char.IsDigit(userName[0]) || userName.Contains(" "))
+                    {
+                        userErr = "Username must not start with a digit and must not contain spaces.";
+                    }
+                    else
+                    {
+                        user.UserName = userName;
+                        userErr = "";
+                    }
+
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(UsernameError));
                     OnPropertyChanged(nameof(IsReady));
                 }
             }
@@ -117,6 +151,11 @@ namespace MauiProject.ViewModels
             }
         }
         public bool IsReady { get => IsRegisterReady(); }
+        public string AgeError
+        {
+            get => ageErr;
+        }
+
         public int Age { get => age; private set => age = value; }
         public DateTime DateOfBirth
         {
@@ -134,8 +173,17 @@ namespace MauiProject.ViewModels
                     {
                         age--;
                     }
+                    if (age < 18)
+                    {
+                        ageErr = "You must be at least 18 years old to register.";
+                    }
+                    else
+                    {
+                        ageErr = "";
+                    }
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(Age));
+                    OnPropertyChanged(nameof(AgeError));
                     OnPropertyChanged(nameof(IsReady));
                 }
             }
@@ -144,7 +192,8 @@ namespace MauiProject.ViewModels
         private bool IsRegisterReady()
         {
             return age > 0 && fullName.Trim().Length > 0 && fullName.Trim().Contains(' ') && password.Trim().Length > 0 &&
-                phone.Trim().Length > 0 && email.Trim().Length > 0;
+                phone.Trim().Length > 0 && email.Trim().Length > 0 && passErr.Trim().Length == 0 && ageErr.Trim().Length == 0
+                && userErr.Trim().Length == 0;
         }
     }
 }

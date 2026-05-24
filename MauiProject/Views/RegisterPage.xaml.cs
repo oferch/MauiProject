@@ -33,34 +33,11 @@ public partial class RegisterPage : ContentPage
     private async void OnRegisterClicked(object sender, EventArgs e)
     {
         RegisterPageViewModel props = (RegisterPageViewModel)BindingContext;
-        bool allValid = true;
-        string pattern = @"^(?=.*[A-Z])(?=.*\d).+$";
+
         if (props != null)
         {
-            PasswordErrorLabel.Text = "";
-            UsernameErrorLabel.Text = "";
-            AgeErrorLabel.Text = "";
-            if (char.IsDigit(props.UserName[0]) || props.UserName.Contains(" "))
-            {
-                allValid = false;
-                UsernameErrorLabel.Text = "Username must not start with a digit and must not contain spaces.";
-            }
-            if (props.Age < 18)
-            {
-                allValid = false;
-                AgeErrorLabel.Text = "You must be at least 18 years old to register.";
-            }
 
-            if (!Regex.IsMatch(props.Password, pattern))
-            {
-                allValid = false;
-                PasswordErrorLabel.Text = "Password Must contin an upper case letter and a digit";
-            }
-
-            if (allValid)
-            {
-                await DisplayAlertAsync("All Good", "All Good", "All Good");
-            }
+             await DisplayAlertAsync("All Good", "All Good", "All Good");
         }
     }
 

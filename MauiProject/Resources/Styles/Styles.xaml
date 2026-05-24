@@ -200,6 +200,12 @@
         </Setter>
     </Style>
 
+    <Style TargetType="Label" x:Key="ErrorLabel">
+        <Setter Property="TextColor" Value="#EF4444" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Padding" Value="4,0,0,0" />
+    </Style>
+    
     <Style TargetType="Label" x:Key="Headline">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource White}}" />
         <Setter Property="FontSize" Value="32" />
