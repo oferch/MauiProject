@@ -30,7 +30,7 @@ public partial class RegisterPage : ContentPage
 
     }
 
-    private void OnRegisterClicked(object sender, EventArgs e)
+    private async void OnRegisterClicked(object sender, EventArgs e)
     {
         RegisterPageViewModel props = (RegisterPageViewModel)BindingContext;
         bool allValid = true;
@@ -59,7 +59,7 @@ public partial class RegisterPage : ContentPage
 
             if (allValid)
             {
-                DisplayAlert("All Good", "All Good", "All Good");
+                await DisplayAlertAsync("All Good", "All Good", "All Good");
             }
         }
     }
