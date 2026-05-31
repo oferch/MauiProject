@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiProject.Views.ProfilePage"
+             BackgroundColor="#F9F9FF"
+             xmlns:ViewModels="clr-namespace:MauiProject.ViewModels"             
+             Shell.NavBarIsVisible="False"
+             FlowDirection="RightToLeft">
+
+    <Grid RowDefinitions="Auto, *" ColumnDefinitions="*">
+
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" HeightRequest="56" Padding="20,0" BackgroundColor="White">
+            <ImageButton Grid.Column="0" Source="shopping_cart_icon.png" WidthRequest="24" HeightRequest="24" BackgroundColor="Transparent" VerticalOptions="Center"/>
+            <Label Grid.Column="1" Text="ShopEase" FontSize="24" FontAttributes="Bold" TextColor="#004ac6" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <ImageButton Grid.Column="2" Source="arrow_back_icon.png" WidthRequest="24" HeightRequest="24" BackgroundColor="Transparent" VerticalOptions="Center"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1" Orientation="Vertical" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Padding="20,24,20,40" Spacing="24">
+
+                <VerticalStackLayout HorizontalOptions="Center" Spacing="12">
+                    <Grid WidthRequest="120" HeightRequest="120" HorizontalOptions="Center">
+                        <Border StrokeShape="RoundRectangle 60" StrokeThickness="4" Stroke="#E7EEFE" Padding="0">
+                            <Image x:Name="ProfileImage" Source="avatar_placeholder.png" Aspect="AspectFill" WidthRequest="112" HeightRequest="112"/>
+                        </Border>
+                        <Border BackgroundColor="#004ac6" StrokeShape="RoundRectangle 20" WidthRequest="40" HeightRequest="40" 
+                                HorizontalOptions="End" VerticalOptions="End" Margin="0,0,0,4" StrokeThickness="0">
+                            <ImageButton Source="edit_white_icon.png" WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent"/>
+                        </Border>
+                    </Grid>
+
+                    <Label x:Name="LblFullNameTitle" Text="ישראל ישראלי" FontSize="22" FontAttributes="Bold" TextColor="#151c27" HorizontalOptions="Center"/>
+                    <Label Text="החלף תמונה" FontSize="14" TextColor="#004ac6" HorizontalOptions="Center" FontAttributes="Bold">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnChangeClickedAsync" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </VerticalStackLayout>
+
+                <Button Text="שליפת איש קשר מהטלפון" 
+                        ImageSource="contact_icon.png" 
+                        ContentLayout="Right,12"
+                        BackgroundColor="#64a8fe" 
+                        TextColor="White" 
+                        HeightRequest="48" 
+                        CornerRadius="8" 
+                        FontAttributes="Bold"
+                        Clicked="OnFetchContactClicked"/>
+
+                <Border BackgroundColor="White" StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8f8" Padding="16,20">
+                    <VerticalStackLayout Spacing="16">
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="שם מלא" FontSize="14" TextColor="#434655" FontAttributes="Bold"/>
+                            <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#c3c6d7" BackgroundColor="#F0F3FF" HeightRequest="50" Padding="12,0">
+                                <Entry x:Name="TxtFullName" TextColor="#151c27" VerticalOptions="Center" IsReadOnly="True" BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="שם משתמש" FontSize="14" TextColor="#434655" FontAttributes="Bold"/>
+                            <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#c3c6d7" BackgroundColor="#F0F3FF" HeightRequest="50" Padding="12,0">
+                                <Entry x:Name="TxtUsername" TextColor="#151c27" VerticalOptions="Center" IsReadOnly="True" BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="אימייל" FontSize="14" TextColor="#434655" FontAttributes="Bold"/>
+                            <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#c3c6d7" BackgroundColor="#F0F3FF" HeightRequest="50" Padding="12,0">
+                                <Entry x:Name="TxtEmail" TextColor="#151c27" VerticalOptions="Center" IsReadOnly="True" BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="מספר טלפון" FontSize="14" TextColor="#434655" FontAttributes="Bold"/>
+                            <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#c3c6d7" BackgroundColor="#F0F3FF" HeightRequest="50" Padding="12,0">
+                                <Entry x:Name="TxtPhone" TextColor="#151c27" VerticalOptions="Center" IsReadOnly="True" BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="תאריך לידה" FontSize="14" TextColor="#434655" FontAttributes="Bold"/>
+                            <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#c3c6d7" BackgroundColor="#F0F3FF" HeightRequest="50" Padding="12,0">
+                                <Entry x:Name="TxtBirthDate" TextColor="#151c27" VerticalOptions="Center" IsReadOnly="True" BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="גיל" FontSize="14" TextColor="#434655" FontAttributes="Bold"/>
+                            <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#c3c6d7" BackgroundColor="#F0F3FF" HeightRequest="50" Padding="12,0">
+                                <Entry x:Name="TxtAge" TextColor="#151c27" VerticalOptions="Center" IsReadOnly="True" BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <VerticalStackLayout Spacing="16" Margin="0,12,0,0">
+                    <Button Text="ערוך פרופיל" 
+                            BackgroundColor="Transparent" 
+                            TextColor="#004ac6" 
+                            BorderColor="#004ac6" 
+                            BorderWidth="1"
+                            HeightRequest="48" 
+                            CornerRadius="8" 
+                            FontAttributes="Bold"
+                            Clicked="OnEditProfileClicked"/>
+
+                    <Label Text="התנתק מהמערכת" 
+                           TextColor="#ba1a1a" 
+                           FontSize="14" 
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnLogoutClicked"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
