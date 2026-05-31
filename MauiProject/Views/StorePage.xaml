@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiProject.Views.StorePage"
+             xmlns:ViewModels="clr-namespace:MauiProject.ViewModels"             
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView Orientation="Vertical">
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto, *, Auto" RowSpacing="0" Padding="0">
+
+            <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" HeightRequest="56" Padding="20,0" BackgroundColor="{StaticResource PageBackgroundLight}">
+                <HorizontalStackLayout Grid.Column="0" Spacing="16" VerticalOptions="Center">
+                    <ImageButton Source="menu_icon.png" WidthRequest="24" HeightRequest="24" BackgroundColor="Transparent"/>
+                    <Label Text="ShopEase" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource PrimaryBlue}" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+                <ImageButton Grid.Column="2" Source="shopping_cart_icon.png" WidthRequest="24" HeightRequest="24" BackgroundColor="Transparent" VerticalOptions="Center"/>
+            </Grid>
+
+            <Grid Grid.Row="1" Padding="20,16,20,8">
+                <Border Stroke="{StaticResource BorderLight}" StrokeShape="RoundRectangle 8" StrokeThickness="1" HeightRequest="48" BackgroundColor="White">
+                    <Grid ColumnDefinitions="*, Auto" Padding="12,0">
+                        <Entry x:Name="SearchInput" Placeholder="חיפוש מוצרים..." HorizontalTextAlignment="Start" VerticalOptions="Center"/>
+                        <Image Grid.Column="1" Source="search_icon.png" WidthRequest="20" HeightRequest="20" VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <ScrollView Grid.Row="2" Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Padding="20,8">
+                <HorizontalStackLayout Spacing="8">
+                    <Button Text="הכל" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" CornerRadius="20" Padding="20,0" HeightRequest="38" FontAttributes="Bold"/>
+                    <Button Text="אלקטרוניקה" BackgroundColor="{StaticResource BorderLight}" TextColor="{StaticResource TextSecondary}" CornerRadius="20" Padding="20,0" HeightRequest="38"/>
+                    <Button Text="לבית" BackgroundColor="{StaticResource BorderLight}" TextColor="{StaticResource TextSecondary}" CornerRadius="20" Padding="20,0" HeightRequest="38"/>
+                    <Button Text="ביגוד" BackgroundColor="{StaticResource BorderLight}" TextColor="{StaticResource TextSecondary}" CornerRadius="20" Padding="20,0" HeightRequest="38"/>
+                    <Button Text="ספורט" BackgroundColor="{StaticResource BorderLight}" TextColor="{StaticResource TextSecondary}" CornerRadius="20" Padding="20,0" HeightRequest="38"/>
+                </HorizontalStackLayout>
+            </ScrollView>
+
+            <Grid Grid.Row="3" ColumnDefinitions="*, Auto" Padding="20,12" VerticalOptions="Center">
+                <Label Grid.Column="0" Text="124 תוצאות" FontSize="14" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <HorizontalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                    <HorizontalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSortClicked" />
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <Label x:Name="LblSortText" Text="מיון: מהנמוך לגבוה" FontSize="14" TextColor="{StaticResource PrimaryBlue}" VerticalOptions="Center"/>
+                    <Image Source="sort_icon.png" WidthRequest="18" HeightRequest="18" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Grid>
+
+            <Grid Grid.Row="4" x:Name="ProductGrid" ColumnDefinitions="*, *" ColumnSpacing="16" RowSpacing="16" Padding="20,0,20,100">
+            </Grid>
+
+        </Grid>
+    </ScrollView>
+</ContentPage>
