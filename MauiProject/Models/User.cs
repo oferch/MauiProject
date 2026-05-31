@@ -9,10 +9,10 @@ namespace MauiProject.Models
     internal class User : ObservableObject
     {
         private int id;
-        private string userName;
-        private string password;
-        private string firstName;
-        private string lastName;
+        private string userName="";
+        private string password="";
+        private string firstName="";
+        private string lastName="";
 
         public int Id
         {

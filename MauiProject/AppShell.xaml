@@ -6,9 +6,18 @@
     xmlns:local="clr-namespace:MauiProject"
     Title="MauiProject">
 
-    <ShellContent
-        Title="Home"
+    <TabBar>
+        <ShellContent
+        Title="Register"
         ContentTemplate="{DataTemplate local:Views.RegisterPage}"
-        Route="MainPage" />
-
+        Route="RegisterPage" />
+        <ShellContent
+        Title="Store"
+        ContentTemplate="{DataTemplate local:Views.StorePage}"
+        Route="StorePage" />
+        <ShellContent
+        Title="Profile"
+        ContentTemplate="{DataTemplate local:Views.ProfilePage}"
+        Route="ProfilePage" />
+    </TabBar>
 </Shell>
