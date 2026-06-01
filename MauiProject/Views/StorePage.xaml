@@ -43,7 +43,7 @@
                         <TapGestureRecognizer Tapped="OnSortClicked" />
                     </HorizontalStackLayout.GestureRecognizers>
                     <Label x:Name="LblSortText" Text="מיון: מהנמוך לגבוה" FontSize="14" TextColor="{StaticResource PrimaryBlue}" VerticalOptions="Center"/>
-                    <Image Source="sort_icon.png" WidthRequest="18" HeightRequest="18" VerticalOptions="Center"/>
+                    <Image Source="arrow_down_up.png" WidthRequest="18" HeightRequest="18" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
             </Grid>
 

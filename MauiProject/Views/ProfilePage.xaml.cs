@@ -54,9 +54,8 @@ public partial class ProfilePage : ContentPage
     }
 
 
-
-    private async Task OnChangeClickedAsync(object sender, TappedEventArgs e)
+    void OnLogoutClicked(object sender, TappedEventArgs e)
     {
-            var cameraPermissionsRequest = await Permissions.RequestAsync<Permissions.Camera>();
+
     }
 }
