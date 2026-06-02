@@ -5,10 +5,10 @@ namespace MauiProject
     public partial class App : Application
     {
         Page startPage;
-        public App(LoginPage page)
+        public App(IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            startPage = page;
+            startPage = serviceProvider.GetRequiredService<RegisterPage>();
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
