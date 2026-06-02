@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MauiProject.Services
+namespace MauiProject.ViewModels
 {
-    public class SqliteStore :IDBStore
+    public class LoginPageViewModel
     {
     }
 }

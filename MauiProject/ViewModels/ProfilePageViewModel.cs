@@ -1,4 +1,5 @@
 ﻿using MauiProject.Models;
+using MauiProject.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,11 +8,12 @@ using Communication = Microsoft.Maui.ApplicationModel.Communication;
 
 namespace MauiProject.ViewModels
 {
-    internal class ProfilePageViewModel : ObservableObject
+    public class ProfilePageViewModel : ObservableObject
     {
         public User user = new User() { Id = 0, FirstName = "", LastName = "", Password = "", UserName = "" };
 
         private string profileImage;
+        private IDBStore db;
         public string ProfileImage { get => profileImage;
             set
             {
@@ -56,11 +58,12 @@ namespace MauiProject.ViewModels
         public ICommand GetContactCommand { get; }
 
 
-        public ProfilePageViewModel()
+        public ProfilePageViewModel(IDBStore db)
         {
             ProfileImage = "avatar.png";
             ChangProfilePhotoCommand = new Command(async () => await TakeProfilePhoto());
             GetContactCommand = new Command(async () => await FetchContact());
+            this.db = db;
         }
 
         private async Task TakeProfilePhoto()

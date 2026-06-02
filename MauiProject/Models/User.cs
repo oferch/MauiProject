@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MauiProject.Models
 {
-    internal class User : ObservableObject
+    public class User : ObservableObject
     {
         private int id;
         private string userName="";

@@ -1,14 +1,15 @@
 namespace MauiProject.Views;
 
+using MauiProject.ViewModels;
 using Communication = Microsoft.Maui.ApplicationModel.Communication;
 
 
 public partial class ProfilePage : ContentPage
 {
-	public ProfilePage()
+	public ProfilePage(ProfilePageViewModel pVM)
 	{
 		InitializeComponent();
-
+        BindingContext = pVM;
     }
 
     private async void OnFetchContactClicked(object sender, EventArgs e)

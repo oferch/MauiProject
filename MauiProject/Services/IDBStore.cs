@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MauiProject.Services
 {
-    public class SqliteStore :IDBStore
+    public interface IDBStore
     {
     }
 }

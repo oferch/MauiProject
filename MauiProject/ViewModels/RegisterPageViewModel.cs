@@ -8,7 +8,7 @@ using MauiProject.Models;
 
 namespace MauiProject.ViewModels
 {
-    internal class RegisterPageViewModel : ObservableObject
+    public class RegisterPageViewModel : ObservableObject
     {
         public User user = new User() { Id = 0, FirstName = "", LastName = "", Password = "", UserName = "" };
         private int age = 0;

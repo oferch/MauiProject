@@ -6,10 +6,6 @@
              xmlns:ViewModels="clr-namespace:MauiProject.ViewModels"             
              Shell.NavBarIsVisible="False"
              FlowDirection="RightToLeft">
-
-    <ContentPage.BindingContext>
-        <ViewModels:ProfilePageViewModel/>
-    </ContentPage.BindingContext>
     
     <Grid RowDefinitions="Auto, *" ColumnDefinitions="*">
 

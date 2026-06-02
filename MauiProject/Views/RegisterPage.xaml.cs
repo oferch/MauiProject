@@ -5,9 +5,11 @@ namespace MauiProject.Views;
 
 public partial class RegisterPage : ContentPage
 {
-    public RegisterPage()
+    public RegisterPage(RegisterPageViewModel rVM)
     {
         InitializeComponent();
+        BindingContext = rVM;
+
     }
 
     private void OnTogglePasswordClicked(object sender, EventArgs e)
