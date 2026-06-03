@@ -1,16 +1,22 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MauiProject.Models
 {
 
-    internal class Product : ObservableObject
+    public class Product : ObservableObject
     {
+        private int id = 0;
         private double price=0;
         private string name="";
+        private string description = "";    
         private string imageUrl="";
-        private bool isFaovrite=false;
+        private bool isFavorite=false;
+
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set;  }
 
         public string Name { get => name; 
             set
@@ -22,6 +28,18 @@ namespace MauiProject.Models
                 }
             }
         }
+
+        public string Description { get => description; 
+            set
+            {
+                if (description != value)
+                {
+                    description = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public double Price { get => price; 
             set
             {
@@ -42,12 +60,12 @@ namespace MauiProject.Models
                 }
             }
         }
-        public bool IsFavorite { get => isFaovrite;
+        public bool IsFavorite { get => isFavorite;
             set
             {
-                if (isFaovrite != value)
+                if (isFavorite != value)
                 {
-                    isFaovrite = value;
+                    isFavorite = value;
                     OnPropertyChanged();
                 }       
             }

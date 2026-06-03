@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace MauiProject.Models
 {
+    [Table("User")]
     public class User : ObservableObject
     {
         private int id;
@@ -14,6 +16,7 @@ namespace MauiProject.Models
         private string firstName="";
         private string lastName="";
 
+        [PrimaryKey,AutoIncrement]
         public int Id
         {
             get => id;
@@ -26,6 +29,8 @@ namespace MauiProject.Models
                 }
             }
         }
+
+        [Indexed]
         public string UserName
         {
             get => userName;

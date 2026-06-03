@@ -1,14 +1,26 @@
-﻿using MauiProject.Views;
+﻿using MauiProject.Models;
+using MauiProject.Services;
+using MauiProject.Views;
 
 namespace MauiProject
 {
     public partial class App : Application
     {
         Page startPage;
+        public User? CurrentUser { get; private set; }
+        private SqliteStore dbStore;
+        private Task loadMockData;
         public App(IServiceProvider serviceProvider)
         {
             InitializeComponent();
             startPage = serviceProvider.GetRequiredService<RegisterPage>();
+            dbStore = (SqliteStore)serviceProvider.GetRequiredService<IDBStore>();
+            loadMockData = LoadAsyncMockData();
+        }
+
+        private async Task LoadAsyncMockData()
+        {
+            await dbStore.LoadAsyncMockData();
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
