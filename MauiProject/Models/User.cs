@@ -15,20 +15,14 @@ namespace MauiProject.Models
         private string password="";
         private string firstName="";
         private string lastName="";
+        private string email = "";
+        private string phoneNumber = "";
+        private bool isAdmin = false;
 
         [PrimaryKey,AutoIncrement]
-        public int Id
-        {
-            get => id;
-            set
-            {
-                if (id != value)
-                {
-                    id = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        public int Id { get; set; }
+        
+        public bool IsAdmin { get; set; }
 
         [Indexed]
         public string UserName
@@ -75,6 +69,32 @@ namespace MauiProject.Models
                 if (lastName != value)
                 {
                     lastName = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string Email
+        {
+            get => email;
+            set
+            {
+                if (email != value)
+                {
+                    email = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string PhoneNumber   
+        {
+            get => phoneNumber;
+            set
+            {
+                if (phoneNumber != value)
+                {
+                    phoneNumber = value;
                     OnPropertyChanged();
                 }
             }

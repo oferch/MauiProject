@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using MauiProject.Models;
+using MauiProject.Services;
 
 namespace MauiProject.ViewModels
 {
@@ -15,6 +16,7 @@ namespace MauiProject.ViewModels
         private string fullName = "";
         private bool isPasswordNotVisible = true;
         private DateTime dateOfBirth = DateTime.Now;
+        IDBStore dbStore;
 
         private string password = "", passErr = "", ageErr = "",  userErr = "",email = "", phone = "", userName = "";
 
@@ -150,6 +152,7 @@ namespace MauiProject.ViewModels
                 }
             }
         }
+
         public bool IsReady { get => IsRegisterReady(); }
         public string AgeError
         {
@@ -194,6 +197,11 @@ namespace MauiProject.ViewModels
             return age > 0 && fullName.Trim().Length > 0 && fullName.Trim().Contains(' ') && password.Trim().Length > 0 &&
                 phone.Trim().Length > 0 && email.Trim().Length > 0 && passErr.Trim().Length == 0 && ageErr.Trim().Length == 0
                 && userErr.Trim().Length == 0;
+        }
+
+        public RegisterPageViewModel(IDBStore dbStore)
+        {
+            this.dbStore = dbStore;
         }
     }
 }

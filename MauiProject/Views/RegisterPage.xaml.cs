@@ -5,10 +5,12 @@ namespace MauiProject.Views;
 
 public partial class RegisterPage : ContentPage
 {
-    public RegisterPage(RegisterPageViewModel rVM)
+    IServiceProvider serviceProvider;
+    public RegisterPage(IServiceProvider serviceProvider)
     {
         InitializeComponent();
-        BindingContext = rVM;
+        BindingContext = serviceProvider.GetService<RegisterPageViewModel>();
+        this.serviceProvider = serviceProvider;
 
     }
 
@@ -45,5 +47,6 @@ public partial class RegisterPage : ContentPage
 
     private void OnSignInClicked(object sender, EventArgs e)
     {
+        Application.Current.Windows[0].Page = serviceProvider.GetService<LoginPage>();
     }
 }

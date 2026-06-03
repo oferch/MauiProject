@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using SQLite;
 using SQLiteNetExtensionsAsync.Extensions;
+using MauiProject.Models;
 
 namespace MauiProject.Services
 {
@@ -29,76 +30,93 @@ namespace MauiProject.Services
             try
             {
                 connection = new SQLiteAsyncConnection(DatabasePath, flags);
-                await connection.CreateTableAsync<Models.User>();
-                await connection.CreateTableAsync<Models.Product>();
-                await connection.CreateTableAsync<Models.Favorite>();
+                await connection.CreateTableAsync<User>();
+                await connection.CreateTableAsync<Product>();
+                await connection.CreateTableAsync<Favorite>();
 
             }
             catch (Exception ex) { }
         }
 
-        public async Task<List<Models.User>> GetUsersAsync()
+        public async Task<User> GetUserAsync(string username)
         {
-            await Init();
-            return await connection.Table<Models.User>().ToListAsync();
+            try
+            {
+                await Init();
+                var user = await connection.GetAsync<User>(u => u.UserName == username);
+                return user;
+            }
+            catch (Exception ex) { 
+            Console.WriteLine(ex.Message);
+            }
+
+            return null;
         }
 
-        public async Task AddUserAsync(Models.User user)
+        public async Task<List<User>> GetUsersAsync()
+        {
+            await Init();
+            return await connection.Table<User>().ToListAsync();
+        }
+
+        public async Task AddUserAsync(User user)
         {
             await Init();
             await connection.InsertAsync(user);
         }
 
-        public async Task AddProductAsync(Models.Product product)
+        public async Task AddProductAsync(Product product)
         {
             await Init();
             await connection.InsertAsync(product);
         }
 
-        public async Task AddFavoriteAsync(Models.Favorite favorite)
+        public async Task AddFavoriteAsync(Favorite favorite)
         {
             await Init();
             await connection.InsertAsync(favorite);
         }
 
-        public async Task<List<Models.User>> GetUsersWithFavoritesAsync()
+        public async Task<List<User>> GetUsersWithFavoritesAsync()
         {
             await Init();
-            return await connection.GetAllWithChildrenAsync<Models.User>();
+            return await connection.GetAllWithChildrenAsync<User>();
         }
 
         public async Task  LoadAsyncMockData()
         {
             await Init();
-            await connection.DeleteAllAsync<Models.User>();
-            await connection.DeleteAllAsync<Models.Product>();
-            await connection.DeleteAllAsync<Models.Favorite>();
+            await connection.DeleteAllAsync<User>();
+            await connection.DeleteAllAsync<Product>();
+            await connection.DeleteAllAsync<Favorite>();
 
-            var user = new Models.User {FirstName = "John", LastName = "Doe", UserName = "johndoe", Password = "password" };
-            var product1 = new Models.Product {  Name = "Product 1", Description = "Description for Product 1", Price = 9.99 };
-            var product2 = new Models.Product { Name = "Product 2", Description = "Description for Product 2", Price = 19.99 };
+            var user = new User {FirstName = "John", LastName = "Doe", UserName = "johndoe", Password = "password", IsAdmin = false };
+            var user2 = new User { FirstName = "master", LastName = "Admin", UserName = "admin", Password = "admin", IsAdmin = true };
+            var product1 = new Product {  Name = "Product 1", Description = "Description for Product 1", Price = 9.99 };
+            var product2 = new Product { Name = "Product 2", Description = "Description for Product 2", Price = 19.99 };
 
             await connection.InsertAsync(user);
+            await connection.InsertAsync(user2);
             await connection.InsertAsync(product1);
             await connection.InsertAsync(product2);
 
-            var favorite1 = new Models.Favorite { Id = 1, UserID = user.Id, ProductID = product1.Id };
-            var favorite2 = new Models.Favorite { Id = 2, UserID = user.Id, ProductID = product2.Id };
+            var favorite1 = new Favorite { Id = 1, UserID = user.Id, ProductID = product1.Id };
+            var favorite2 = new Favorite { Id = 2, UserID = user.Id, ProductID = product2.Id };
 
             await connection.InsertAsync(favorite1);
             await connection.InsertAsync(favorite2);
         }
 
-        public async Task<List<Models.Product>> GetProductsAsync()
+        public async Task<List<Product>> GetProductsAsync()
         {
             await Init();
-            return await connection.Table<Models.Product>().ToListAsync();
+            return await connection.Table<Product>().ToListAsync();
         }
 
-        public async Task<List<Models.Favorite>> GetFavoritesAsync()
+        public async Task<List<Favorite>> GetFavoritesAsync()
         {
             await Init();
-            return await connection.Table<Models.Favorite>().ToListAsync();
+            return await connection.Table<Favorite>().ToListAsync();
         }
     }
 }

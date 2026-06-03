@@ -10,7 +10,7 @@ namespace MauiProject.ViewModels
 {
     public class ProfilePageViewModel : ObservableObject
     {
-        public User user = new User() { Id = 0, FirstName = "", LastName = "", Password = "", UserName = "" };
+        public User user = new User() { Id = 0, FirstName = "", LastName = "", Password = "", UserName = "", Email = "", PhoneNumber = "" };
 
         private string profileImage;
         private IDBStore db;
@@ -48,6 +48,32 @@ namespace MauiProject.ViewModels
                     user.LastName = value;
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(FullName));
+                }
+            }
+        }
+
+        public string Email
+        {
+            get => user.Email;
+            set
+            {
+                if (user.Email != value)
+                {
+                    user.Email = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string PhoneNumber
+        {
+            get => user.PhoneNumber;
+            set
+            {
+                if (user.PhoneNumber != value)
+                {
+                    user.PhoneNumber = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -114,7 +140,16 @@ namespace MauiProject.ViewModels
                     string nameSuffix = contact.NameSuffix;
                     string displayName = contact.DisplayName;
                     List<ContactPhone> phones = contact.Phones; // List of phone numbers
+                    if (phones.Count > 0)
+                    {
+                        PhoneNumber = phones[0].PhoneNumber; // Just take the first phone number
+                    }
                     List<ContactEmail> emails = contact.Emails; // List of email addresses
+                    if(emails.Count > 0)
+                    {
+                        Email = emails[0].EmailAddress; // Just take the first email address
+                    }
+
                 }
                 catch (Exception ex)
                 {

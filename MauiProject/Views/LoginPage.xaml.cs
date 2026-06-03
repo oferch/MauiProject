@@ -1,5 +1,6 @@
 using MauiProject.ViewModels;
-
+using System.Windows.Input;
+using MauiProject.Models;
 namespace MauiProject.Views;
 
 public partial class LoginPage : ContentPage
@@ -8,12 +9,13 @@ public partial class LoginPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
-	}
-
-    private void OnLoginClicked(object sender, EventArgs e)
-    {
 
     }
+
+
+
+
+
 
     private void OnTogglePasswordClicked(object sender, EventArgs e)
     {

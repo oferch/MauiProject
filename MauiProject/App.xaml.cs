@@ -7,15 +7,15 @@ namespace MauiProject
     public partial class App : Application
     {
         Page startPage;
-        public User? CurrentUser { get; private set; }
+        public User? CurrentUser { get; set; }
         private SqliteStore dbStore;
         private Task loadMockData;
         public App(IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            startPage = serviceProvider.GetRequiredService<RegisterPage>();
+            startPage = serviceProvider.GetRequiredService<LoginPage>();
             dbStore = (SqliteStore)serviceProvider.GetRequiredService<IDBStore>();
-            loadMockData = LoadAsyncMockData();
+           loadMockData = LoadAsyncMockData();
         }
 
         private async Task LoadAsyncMockData()
