@@ -8,6 +8,12 @@
 
     <TabBar>
         <ShellContent
+            Icon="home.png"
+        Title="Store"
+        ContentTemplate="{DataTemplate local:Views.StorePage}"
+        Route="StorePage" />
+        <ShellContent
+            Icon="profile.png"
         Title="Profile"
         ContentTemplate="{DataTemplate local:Views.ProfilePage}"
         Route="ProfilePage" />
