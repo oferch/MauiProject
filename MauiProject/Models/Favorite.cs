@@ -10,7 +10,7 @@ namespace MauiProject.Models
 
     public class Favorite
     {
-        [PrimaryKey]
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
         [ForeignKey(typeof(User))]
@@ -18,11 +18,5 @@ namespace MauiProject.Models
 
         [ForeignKey(typeof(Product))]
         public int ProductID { get; set; }
-
-        [OneToOne(CascadeOperations = CascadeOperation.CascadeRead)]
-        public User? User { get; set; }
-
-        [OneToOne(CascadeOperations = CascadeOperation.CascadeRead)]
-        public Product? Product { get; set; }    
     }
 }

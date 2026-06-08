@@ -11,7 +11,7 @@ namespace MauiProject.ViewModels
 {
     public class RegisterPageViewModel : ObservableObject
     {
-        public User user = new User() { Id = 0, FirstName = "", LastName = "", Password = "", UserName = "" };
+        public User user = new User() { Id = 0, FirstName = "", LastName = "", Password = "", UserName = "", Email = "", PhoneNumber = "" };
         private int age = 0;
         private string fullName = "";
         private bool isPasswordNotVisible = true;
@@ -102,6 +102,7 @@ namespace MauiProject.ViewModels
                 if (email != value)
                 {
                     email = value;
+                    user.Email = value;
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(IsReady));
                 }
@@ -116,6 +117,7 @@ namespace MauiProject.ViewModels
                 if (phone != value)
                 {
                     phone = value;
+                    user.PhoneNumber = value;
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(IsReady));
                 }
@@ -168,6 +170,7 @@ namespace MauiProject.ViewModels
                 if (value != dateOfBirth)
                 {
                     dateOfBirth = value;
+                    user.DateOfBirth = value;
                     TimeSpan ts = DateTime.Now.Subtract(dateOfBirth);
                     age = DateTime.Now.Year - dateOfBirth.Year;
 
@@ -197,6 +200,16 @@ namespace MauiProject.ViewModels
             return age > 0 && fullName.Trim().Length > 0 && fullName.Trim().Contains(' ') && password.Trim().Length > 0 &&
                 phone.Trim().Length > 0 && email.Trim().Length > 0 && passErr.Trim().Length == 0 && ageErr.Trim().Length == 0
                 && userErr.Trim().Length == 0;
+        }
+
+        public bool Save()
+        {
+            if (IsRegisterReady())
+            {
+                dbStore.AddUserAsync(user);
+                return true;
+            }
+            return false;
         }
 
         public RegisterPageViewModel(IDBStore dbStore)

@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,6 @@ namespace MauiProject.Models
     [Table("User")]
     public class User : ObservableObject
     {
-        private int id;
         private string userName="";
         private string password="";
         private string firstName="";
@@ -18,12 +18,17 @@ namespace MauiProject.Models
         private string email = "";
         private string phoneNumber = "";
         private bool isAdmin = false;
+        private DateTime dateOfBirth = DateTime.Now;
+
 
         [PrimaryKey,AutoIncrement]
         public int Id { get; set; }
-        
-        public bool IsAdmin { get; set; }
 
+        public bool IsAdmin 
+        {
+            get => isAdmin;
+            set { if (isAdmin != value) { isAdmin = value; OnPropertyChanged(); } }
+        }
         [Indexed]
         public string UserName
         {
@@ -100,5 +105,20 @@ namespace MauiProject.Models
             }
         }
 
+        public DateTime DateOfBirth
+        {
+            get => dateOfBirth;
+            set
+            {
+                if (dateOfBirth != value)
+                {
+                    dateOfBirth = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        [ManyToMany(typeof(Favorite), CascadeOperations = CascadeOperation.CascadeRead|CascadeOperation.CascadeInsert|CascadeOperation.CascadeDelete)]
+        public List<Product> Favorites { get; set; } = new List<Product>();
     }
 }

@@ -20,7 +20,7 @@
     <ScrollView>
         <VerticalStackLayout Spacing="0">
 
-            <Grid ColumnDefinitions="48, *, 48" Padding="16, 12">
+            <!--Grid ColumnDefinitions="48, *, 48" Padding="16, 12">
                 <ImageButton Source="arrow_back.png" 
                              HeightRequest="24" 
                              HorizontalOptions="Start"
@@ -32,7 +32,7 @@
                        HorizontalOptions="Center" 
                        VerticalOptions="Center"
                        TextColor="{AppThemeBinding Dark=White, Light={StaticResource Key=TextPrimary}}"/>
-            </Grid>
+            </Grid-->
 
             <Border Margin="16, 8"
                     StrokeShape="RoundRectangle 12"

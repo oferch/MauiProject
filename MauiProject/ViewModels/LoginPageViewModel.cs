@@ -13,9 +13,7 @@ namespace MauiProject.ViewModels
         private IDBStore dbStore;
         private IServiceProvider serviceProvider;
         private  User user = new User() { Id = 0, FirstName = "", LastName = "", Password = "", UserName = "" };
-
-
-
+        private bool isPasswordNotVisible=true;
 
         public ICommand LoginCommand { get; }
         public ICommand SignUpCommand { get; }
@@ -46,6 +44,19 @@ namespace MauiProject.ViewModels
         private async Task DoSignUp()
         {
             Application.Current.MainPage = serviceProvider.GetRequiredService<RegisterPage>();
+        }
+
+        public bool IsPasswordNotVisible
+        {
+            get => isPasswordNotVisible;
+            set
+            {
+                if (isPasswordNotVisible != value)
+                {
+                    isPasswordNotVisible = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         public string Username

@@ -9,13 +9,13 @@
         <VerticalStackLayout Spacing="0">
 
             <Grid ColumnDefinitions="48, *, 48" Padding="16, 12">
-                <ImageButton Source="arrow_back.png" 
+                <!--ImageButton Source="arrow_back.png" 
                              HeightRequest="24" 
                              HorizontalOptions="Start"
                              BackgroundColor="Transparent">
                     <ImageButton.Behaviors>
                     </ImageButton.Behaviors>
-                </ImageButton>
+                </ImageButton-->
                 <Label Grid.Column="1" 
                        Text="Login" 
                        FontSize="18" 
@@ -101,7 +101,7 @@
                         <Grid ColumnDefinitions="*, Auto">
                             <Entry x:Name="PasswordEntry"
                                    Placeholder="Enter your password" 
-                                   IsPassword="True" 
+                                   IsPassword="{Binding IsPasswordNotVisible}" 
                                    Text="{Binding Password}"
                                    Style="{DynamicResource LoginEntryStyle}"/>
                             <ImageButton Grid.Column="1" 

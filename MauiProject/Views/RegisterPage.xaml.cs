@@ -40,8 +40,9 @@ public partial class RegisterPage : ContentPage
 
         if (props != null)
         {
-
-             await DisplayAlertAsync("All Good", "All Good", "All Good");
+            props.Save();
+            await DisplayAlert("Success", "Your account has been created successfully!", "OK");
+            Application.Current.Windows[0].Page = serviceProvider.GetService<LoginPage>();
         }
     }
 

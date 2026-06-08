@@ -33,6 +33,7 @@ namespace MauiProject
             builder.Services.AddTransient<ProfilePage>();
             builder.Services.AddTransient<RegisterPage>();
             builder.Services.AddTransient<StorePage>();
+            builder.Services.AddTransient<FavoritesPage>();
             return builder;
         }
 
@@ -47,6 +48,7 @@ namespace MauiProject
             builder.Services.AddTransient<LoginPageViewModel>();
             builder.Services.AddTransient<ProfilePageViewModel>();
             builder.Services.AddTransient<RegisterPageViewModel>();
+            builder.Services.AddTransient<StorePageViewModel>();
             return builder;
         }
 

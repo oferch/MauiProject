@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,6 @@ namespace MauiProject.Models
 
     public class Product : ObservableObject
     {
-        private int id = 0;
         private double price=0;
         private string name="";
         private string description = "";    
@@ -70,5 +70,7 @@ namespace MauiProject.Models
                 }       
             }
         }
+/*        [ManyToMany(typeof(Favorite), CascadeOperations = CascadeOperation.CascadeRead | CascadeOperation.CascadeInsert | CascadeOperation.CascadeDelete)]
+        public List<User> Users { get; set; } = new List<User>();*/
     }
 }

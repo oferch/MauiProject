@@ -90,6 +90,7 @@ namespace MauiProject.ViewModels
             ChangProfilePhotoCommand = new Command(async () => await TakeProfilePhoto());
             GetContactCommand = new Command(async () => await FetchContact());
             this.db = db;
+            this.user = ((App)Application.Current).CurrentUser;
         }
 
         private async Task TakeProfilePhoto()
