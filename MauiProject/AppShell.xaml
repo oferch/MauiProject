@@ -12,12 +12,12 @@
         ContentTemplate="{DataTemplate local:Views.StorePage}"
         Route="StorePage" />
         <ShellContent
+        Title="Favorites"
+        ContentTemplate="{DataTemplate local:Views.FavoritesPage}"
+        Route="FavoritesPage" />        
+        <ShellContent
         Title="Profile"
         ContentTemplate="{DataTemplate local:Views.ProfilePage}"
         Route="ProfilePage" />
-        <ShellContent
-        Title="Favorites"
-        ContentTemplate="{DataTemplate local:Views.FavoritesPage}"
-        Route="FavoritesPage" />
     </TabBar>
 </Shell>

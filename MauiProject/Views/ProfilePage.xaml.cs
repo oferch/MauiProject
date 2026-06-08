@@ -59,4 +59,9 @@ public partial class ProfilePage : ContentPage
     {
 
     }
+
+    private void OnEditProfileClicked(object sender, EventArgs e)
+    {
+        ((ProfilePageViewModel)BindingContext).Update();
+    }
 }

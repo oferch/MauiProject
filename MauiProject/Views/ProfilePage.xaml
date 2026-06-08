@@ -60,28 +60,28 @@
                         <VerticalStackLayout Spacing="6">
                             <Label Text="שם משתמש" FontSize="14" TextColor="#434655" FontAttributes="Bold"/>
                             <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#c3c6d7" BackgroundColor="#F0F3FF" HeightRequest="50" Padding="12,0">
-                                <Entry x:Name="TxtUsername" Text="{Binding FullName}" TextColor="#151c27" VerticalOptions="Center" IsReadOnly="True" BackgroundColor="Transparent"/>
+                                <Entry x:Name="TxtUsername" Text="{Binding UserName}" TextColor="#151c27" VerticalOptions="Center" IsReadOnly="False" BackgroundColor="Transparent"/>
                             </Border>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="6">
                             <Label Text="אימייל" FontSize="14" TextColor="#434655" FontAttributes="Bold"/>
                             <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#c3c6d7" BackgroundColor="#F0F3FF" HeightRequest="50" Padding="12,0">
-                                <Entry x:Name="TxtEmail"     TextColor="#151c27" VerticalOptions="Center" IsReadOnly="True" BackgroundColor="Transparent"/>
+                                <Entry x:Name="TxtEmail" Text="{Binding Email}"   TextColor="#151c27" VerticalOptions="Center" IsReadOnly="False" BackgroundColor="Transparent"/>
                             </Border>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="6">
                             <Label Text="מספר טלפון" FontSize="14" TextColor="#434655" FontAttributes="Bold"/>
                             <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#c3c6d7" BackgroundColor="#F0F3FF" HeightRequest="50" Padding="12,0">
-                                <Entry x:Name="TxtPhone" Text="{Binding PhoneNumber}" TextColor="#151c27" VerticalOptions="Center" IsReadOnly="True" BackgroundColor="Transparent"/>
+                                <Entry x:Name="TxtPhone" Text="{Binding PhoneNumber}" TextColor="#151c27" VerticalOptions="Center" IsReadOnly="False" BackgroundColor="Transparent"/>
                             </Border>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="6">
                             <Label Text="תאריך לידה" FontSize="14" TextColor="#434655" FontAttributes="Bold"/>
                             <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#c3c6d7" BackgroundColor="#F0F3FF" HeightRequest="50" Padding="12,0">
-                                <Entry x:Name="TxtBirthDate" Text="{Binding BirthDate}" TextColor="#151c27" VerticalOptions="Center" IsReadOnly="True" BackgroundColor="Transparent"/>
+                                <Entry x:Name="TxtBirthDate" Text="{Binding DateOfBirth}" TextColor="#151c27" VerticalOptions="Center" IsReadOnly="True" BackgroundColor="Transparent"/>
                             </Border>
                         </VerticalStackLayout>
 
@@ -96,7 +96,7 @@
                 </Border>
 
                 <VerticalStackLayout Spacing="16" Margin="0,12,0,0">
-                    <Button Text="ערוך פרופיל" 
+                    <Button Text="שמור פרופיל" 
                             BackgroundColor="Transparent" 
                             TextColor="#004ac6" 
                             BorderColor="#004ac6" 

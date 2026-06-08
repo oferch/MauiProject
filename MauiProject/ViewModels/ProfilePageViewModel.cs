@@ -14,6 +14,8 @@ namespace MauiProject.ViewModels
 
         private string profileImage;
         private IDBStore db;
+        private int age;
+
         public string ProfileImage { get => profileImage;
             set
             {
@@ -24,6 +26,8 @@ namespace MauiProject.ViewModels
                 }
             }
         }
+
+        public int Age { get => age; private set => age = value; }
 
         public string FirstName
         {
@@ -65,6 +69,19 @@ namespace MauiProject.ViewModels
             }
         }
 
+        public string UserName  
+        {
+            get => user.UserName;
+            set
+            {
+                if (user.UserName != value)
+                {
+                    user.UserName = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public string PhoneNumber
         {
             get => user.PhoneNumber;
@@ -74,6 +91,29 @@ namespace MauiProject.ViewModels
                 {
                     user.PhoneNumber = value;
                     OnPropertyChanged();
+                }
+            }
+        }
+
+        public DateTime DateOfBirth
+        {
+            get => user.DateOfBirth;
+            set
+            {
+                if (user.DateOfBirth != value)
+                {
+                    user.DateOfBirth = value;
+                    TimeSpan ts = DateTime.Now.Subtract(user.DateOfBirth);
+                    age = DateTime.Now.Year - user.DateOfBirth.Year;
+
+                    // Adjust if the birthday hasn't occurred this year yet
+                    if (DateTime.Now.Month < user.DateOfBirth.Month || (DateTime.Now.Month == user.DateOfBirth.Month && DateTime.Now.Day < user.DateOfBirth.Day))
+                    {
+                        age--;
+                    }
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(Age));
+
                 }
             }
         }
@@ -91,8 +131,21 @@ namespace MauiProject.ViewModels
             GetContactCommand = new Command(async () => await FetchContact());
             this.db = db;
             this.user = ((App)Application.Current).CurrentUser;
+
+            TimeSpan ts = DateTime.Now.Subtract(user.DateOfBirth);
+            age = DateTime.Now.Year - user.DateOfBirth.Year;
+
+            // Adjust if the birthday hasn't occurred this year yet
+            if (DateTime.Now.Month < user.DateOfBirth.Month || (DateTime.Now.Month == user.DateOfBirth.Month && DateTime.Now.Day < user.DateOfBirth.Day))
+            {
+                age--;
+            }
         }
 
+        public void Update()
+        {
+            db.UpdateUserAsync(user);
+        }
         private async Task TakeProfilePhoto()
         {
             var cameraPermissionsRequest = await Permissions.RequestAsync<Permissions.Camera>();

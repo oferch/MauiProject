@@ -31,14 +31,14 @@ namespace MauiProject.Services
             {
                 connection = new SQLiteAsyncConnection(DatabasePath, flags);
 
-                /*await connection.DropTableAsync<Favorite>();
-                await connection.DropTableAsync<User>();
-                await connection.DropTableAsync<Product>();
+                //await connection.DropTableAsync<Favorite>();
+                //await connection.DropTableAsync<User>();
+                //await connection.DropTableAsync<Product>();
 
-                await connection.CreateTableAsync<User>();
-                await connection.CreateTableAsync<Product>();
-                await connection.CreateTableAsync<Favorite>();
-                */
+                //await connection.CreateTableAsync<User>();
+                //await connection.CreateTableAsync<Product>();
+                //await connection.CreateTableAsync<Favorite>();
+                
             }
             catch (Exception ex) { }
         }
@@ -120,11 +120,11 @@ namespace MauiProject.Services
 
             var user = new User {FirstName = "John", LastName = "Doe", UserName = "johndoe", Password = "password", PhoneNumber = "123-456-7890", DateOfBirth=DateTime.Parse("12/12/2000"), IsAdmin = false };
             var user2 = new User { FirstName = "master", LastName = "Admin", UserName = "admin", Password = "admin", PhoneNumber = "098-765-4321", DateOfBirth=DateTime.Parse("10/10/2000"), IsAdmin = true };
-            var product1 = new Product {  Name = "Product 1", Description = "Description for Product 1", Price = 9.99 };
-            var product2 = new Product { Name = "Product 2", Description = "Description for Product 2", Price = 19.99 };
+            var product1 = new Product {  Name = "Product 1", Description = "Description for Product 1", Price = 9.99, ImageUrl= "product10.png"};
+            var product2 = new Product { Name = "Product 2", Description = "Description for Product 2", Price = 19.99, ImageUrl= "product12.png" };
             for (int i = 0; i < 10; i++)
             {
-                var product = new Product { Name = $"Product {i + 3}", Description = $"Description for Product {i + 3}", Price = 9.99 + i };
+                var product = new Product { Name = $"Product {i + 3}", Description = $"Description for Product {i + 3}", Price = 9.99 + i, ImageUrl= $"product{i}.png" };
                 await connection.InsertWithChildrenAsync(product);
             }
 
