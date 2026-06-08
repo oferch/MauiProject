@@ -35,9 +35,40 @@ namespace MauiProject.ViewModels
                     {
                         item.IsFavorite = true;
                     }
+                    if (u.Favorites != null)
+                    {
+                        item.PropertyChanged += Item_PropertyChanged;
+                    }
                 }
             }
 
+        }
+
+        private void Item_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            Product p = sender as Product;
+            User u = ((App)Application.Current).CurrentUser;
+
+            if (p != null)
+            {
+                if (!p.IsFavorite)
+                {
+                    if (u.Favorites != null && u.Favorites.Any(t => t.Id == p.Id))
+                    {
+                        var toRemove = u.Favorites.FirstOrDefault(t => t.Id == p.Id);
+                        u.Favorites.Remove(toRemove);
+                        dbStore.UpdateUserAsync(u);
+                    }
+                }
+                else
+                {
+                    if (u.Favorites != null && !u.Favorites.Any(t => t.Id == p.Id))
+                    {
+                        u.Favorites.Add(p);
+                        dbStore.UpdateUserAsync(u);
+                    }
+                }
+            }
         }
 
         public StorePageViewModel(IDBStore dbStore)

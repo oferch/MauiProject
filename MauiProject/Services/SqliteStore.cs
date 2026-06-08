@@ -31,14 +31,14 @@ namespace MauiProject.Services
             {
                 connection = new SQLiteAsyncConnection(DatabasePath, flags);
 
-                await connection.DropTableAsync<Favorite>();
+                /*await connection.DropTableAsync<Favorite>();
                 await connection.DropTableAsync<User>();
                 await connection.DropTableAsync<Product>();
 
                 await connection.CreateTableAsync<User>();
                 await connection.CreateTableAsync<Product>();
                 await connection.CreateTableAsync<Favorite>();
-
+                */
             }
             catch (Exception ex) { }
         }
@@ -93,6 +93,12 @@ namespace MauiProject.Services
         {
             await Init();
             await connection.InsertAsync(product);
+        }
+
+        public async Task UpdateUserAsync(User u)
+        {
+            await Init();
+            await connection.UpdateWithChildrenAsync(u);
         }
 
         public async Task AddFavoriteAsync(Favorite favorite)

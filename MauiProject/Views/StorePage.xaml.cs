@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Core.Extensions;
 using MauiProject.Models;
 using MauiProject.ViewModels;
 using MauiProject.Views.Helpers;
@@ -27,10 +28,12 @@ public partial class StorePage : ContentPage
     private async Task? LoadProductsDataAsync(StorePageViewModel vm)
     {
         await vm.LoadAsyncProductsData(((App)Application.Current).CurrentUser);
-        helper = new StorePageHelper(vm.Products, ProductGrid, this);
+        helper = new StorePageHelper(vm.Products.ToObservableCollection(), ProductGrid, this);
+        ProductCountLabel.Text = $"נמצאו {vm.Products.Count} מוצרים";
 
-        LblSortText.Text = helper.SortAndRefreshGrid();
+        LblSortText.Text = helper.DoSort();
     }
+
 
     //private void LoadMockProducts()
     //{
@@ -43,5 +46,9 @@ public partial class StorePage : ContentPage
     //    };
     //}
 
-  
+    public void OnSortClicked(object sender, EventArgs e)
+    {
+        LblSortText.Text = helper.DoSort();        
+    }
+
 }

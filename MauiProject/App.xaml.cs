@@ -20,7 +20,7 @@ namespace MauiProject
 
         private async Task LoadAsyncMockData()
         {
-            await dbStore.LoadAsyncMockData();
+            //await dbStore.LoadAsyncMockData();
         }
 
         protected override Window CreateWindow(IActivationState? activationState)

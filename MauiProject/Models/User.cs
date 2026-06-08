@@ -2,6 +2,7 @@
 using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -119,6 +120,6 @@ namespace MauiProject.Models
         }
 
         [ManyToMany(typeof(Favorite), CascadeOperations = CascadeOperation.CascadeRead|CascadeOperation.CascadeInsert|CascadeOperation.CascadeDelete)]
-        public List<Product> Favorites { get; set; } = new List<Product>();
+        public ObservableCollection<Product> Favorites { get; set; } = new ObservableCollection<Product>();
     }
 }

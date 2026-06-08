@@ -1,46 +1,73 @@
-﻿using MauiProject.Models;
+﻿using CommunityToolkit.Maui.Core.Extensions;
+using MauiProject.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace MauiProject.Views.Helpers
 {
-    public class StorePageHelper
+    public class StorePageHelper : ObservableObject
     {
         // A collection to hold our dynamic database/API data
-        private List<Product> ProductsList { get; set; } = new();
+        public ObservableCollection<Product> ProductsList { get; set; } = new();
         private bool _isAscending = true;
         private Grid ProductGrid = null;
         private Page page = null;
+        private bool isClean = false;
 
-        public StorePageHelper(List<Product> ProductsList, Grid ProductGrid, Page page)
+        public StorePageHelper(ObservableCollection<Product> ProductsList, Grid ProductGrid, Page page, bool IsClean = false)
         {
             this.ProductsList = ProductsList;
+            this.ProductsList.CollectionChanged += ProductsList_CollectionChanged;
+
             this.ProductGrid = ProductGrid;
             this.page = page;
+            this.isClean = IsClean;
         }
 
-        public void OnSortClicked(object sender, EventArgs e)
+        private void ProductsList_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            // היפוך מצב המיון
+            ProductsList = sender as ObservableCollection<Product>;
+            switch (e.Action)
+            {
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Replace:
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Move:
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Reset:
+                    break;
+
+                default:
+                    break;
+            }
+                PopulateProductGrid();
+        }
+
+        public string DoSort()
+        {
             _isAscending = !_isAscending;
 
             // הפעלת לוגיקת המיון והרענון
-            SortAndRefreshGrid();
+            return SortAndRefreshGrid();
         }
-
-        public string SortAndRefreshGrid()
+        private string SortAndRefreshGrid()
         {
+
             string text = string.Empty;
             // 1. מיון הרשימה דינמית באמצעות LINQ לפי מצב המשתנה
             if (_isAscending)
             {
-                ProductsList = ProductsList.OrderBy(p => p.Price).ToList();
+                ProductsList = ProductsList.OrderBy(p => p.Price).ToObservableCollection();
                 text = "מיון: מהנמוך לגבוה";
             }
             else
             {
-                ProductsList = ProductsList.OrderByDescending(p => p.Price).ToList();
+                ProductsList = ProductsList.OrderByDescending(p => p.Price).ToObservableCollection();
                 text = "מיון: מהגבוה לנמוך";
             }
 
@@ -131,11 +158,13 @@ namespace MauiProject.Views.Helpers
                 VerticalOptions = LayoutOptions.Start,
                 Margin = new Thickness(8),
                 BackgroundColor = Color.FromRgba(255, 255, 255, 204), // CCFFFFFF semi-transparent
-                CornerRadius = 16
+                CornerRadius = 16,
+                IsVisible = !isClean
             };
             favButton.Clicked += (s, e) => {
                 product.IsFavorite = !product.IsFavorite;
                 favButton.Source = product.IsFavorite ? "favorite_filled.png" : "favorite_outline.png";
+                OnPropertyChanged(nameof(ProductsList));
             };
             imageGrid.Children.Add(favButton);
 
@@ -156,7 +185,7 @@ namespace MauiProject.Views.Helpers
 
             var priceLabel = new Label
             {
-                Text = $"₪{product.Price}",
+                Text = $"₪{product.Price:F2}",
                 FontSize = 16,
                 FontAttributes = FontAttributes.Bold,
                 HorizontalTextAlignment = TextAlignment.Start
@@ -170,7 +199,8 @@ namespace MauiProject.Views.Helpers
                 HeightRequest = 36,
                 CornerRadius = 8,
                 FontSize = 12,
-                TextColor = Colors.White
+                TextColor = Colors.White,
+                IsVisible = !isClean
             };
             if (brandColor != null) addToCartButton.BackgroundColor = (Color)brandColor;
 
