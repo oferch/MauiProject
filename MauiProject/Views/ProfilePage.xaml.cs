@@ -6,10 +6,13 @@ using Communication = Microsoft.Maui.ApplicationModel.Communication;
 
 public partial class ProfilePage : ContentPage
 {
-	public ProfilePage(ProfilePageViewModel pVM)
+    IServiceProvider serviceProvider;
+
+    public ProfilePage(ProfilePageViewModel pVM, IServiceProvider serviceProvider)
 	{
 		InitializeComponent();
         BindingContext = pVM;
+        this.serviceProvider = serviceProvider;
     }
 
     private async void OnFetchContactClicked(object sender, EventArgs e)
@@ -57,7 +60,8 @@ public partial class ProfilePage : ContentPage
 
     void OnLogoutClicked(object sender, TappedEventArgs e)
     {
-
+        ((App)Application.Current).CurrentUser = null;
+        Application.Current.Windows[0].Page = serviceProvider.GetService<LoginPage>();
     }
 
     private void OnEditProfileClicked(object sender, EventArgs e)
