@@ -7,8 +7,8 @@ namespace MauiProject.Views;
 
 public partial class StorePage : ContentPage
 {
-    private Task loadData;
-    private StorePageHelper helper;
+    private Task? loadData;
+    private StorePageHelper? helper;
 
 
     public StorePage(StorePageViewModel vm)
@@ -27,11 +27,18 @@ public partial class StorePage : ContentPage
 
     private async Task? LoadProductsDataAsync(StorePageViewModel vm)
     {
-        await vm.LoadAsyncProductsData(((App)Application.Current).CurrentUser);
-        helper = new StorePageHelper(vm.Products.ToObservableCollection(), ProductGrid, this);
-        ProductCountLabel.Text = $"נמצאו {vm.Products.Count} מוצרים";
+        if (Application.Current != null && ((App)Application.Current).CurrentUser != null)
+        {
+            await vm.LoadAsyncProductsData(((App)Application.Current).CurrentUser);
 
-        LblSortText.Text = helper.DoSort();
+            if (!((App)Application.Current).CurrentUser.IsAdmin)
+                helper = new StorePageHelper(vm.Products.ToObservableCollection(), ProductGrid, this);
+            else
+                helper = new StorePageHelper(vm.Products.ToObservableCollection(), ProductGrid, this, StorePageHelper.StorePageMode.Admins);
+            ProductCountLabel.Text = $"נמצאו {vm.Products.Count} מוצרים";
+
+            LblSortText.Text = helper.DoSort();
+        }
     }
 
 
@@ -48,7 +55,8 @@ public partial class StorePage : ContentPage
 
     public void OnSortClicked(object sender, EventArgs e)
     {
-        LblSortText.Text = helper.DoSort();        
+        if (helper != null)
+            LblSortText.Text = helper.DoSort();        
     }
 
 }

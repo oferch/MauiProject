@@ -130,7 +130,8 @@ namespace MauiProject.ViewModels
             ChangProfilePhotoCommand = new Command(async () => await TakeProfilePhoto());
             GetContactCommand = new Command(async () => await FetchContact());
             this.db = db;
-            this.user = ((App)Application.Current).CurrentUser;
+            if (Application.Current is not null && ((App)Application.Current).CurrentUser is not null)
+                this.user = ((App)Application.Current).CurrentUser;
 
             TimeSpan ts = DateTime.Now.Subtract(user.DateOfBirth);
             age = DateTime.Now.Year - user.DateOfBirth.Year;
@@ -208,6 +209,7 @@ namespace MauiProject.ViewModels
                 catch (Exception ex)
                 {
                     // Most likely permission denied
+                    Console.WriteLine(ex.Message);
                 }
             }
             else

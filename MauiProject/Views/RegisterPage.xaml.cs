@@ -42,12 +42,14 @@ public partial class RegisterPage : ContentPage
         {
             props.Save();
             await DisplayAlert("Success", "Your account has been created successfully!", "OK");
-            Application.Current.Windows[0].Page = serviceProvider.GetService<LoginPage>();
+            if (Application.Current is not null)
+                Application.Current.Windows[0].Page = serviceProvider.GetService<LoginPage>();
         }
     }
 
     private void OnSignInClicked(object sender, EventArgs e)
     {
-        Application.Current.Windows[0].Page = serviceProvider.GetService<LoginPage>();
+        if (Application.Current is not null)
+             Application.Current.Windows[0].Page = serviceProvider.GetService<LoginPage>();
     }
 }

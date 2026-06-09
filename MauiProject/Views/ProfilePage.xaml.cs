@@ -45,6 +45,7 @@ public partial class ProfilePage : ContentPage
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 // Most likely permission denied
             }
         }
@@ -60,8 +61,10 @@ public partial class ProfilePage : ContentPage
 
     void OnLogoutClicked(object sender, TappedEventArgs e)
     {
-        ((App)Application.Current).CurrentUser = null;
-        Application.Current.Windows[0].Page = serviceProvider.GetService<LoginPage>();
+        if (Application.Current is not null)
+            ((App)Application.Current).CurrentUser = null;
+        if (Application.Current is not null)
+            Application.Current.Windows[0].Page = serviceProvider.GetService<LoginPage>();
     }
 
     private void OnEditProfileClicked(object sender, EventArgs e)

@@ -1,19 +1,23 @@
 using MauiProject.Views.Helpers;
+using static MauiProject.Views.Helpers.StorePageHelper;
 
 namespace MauiProject.Views;
 
 public partial class FavoritesPage : ContentPage
 {
-    private StorePageHelper helper;
+    private StorePageHelper? helper;
 
     public FavoritesPage()
 	{
 		InitializeComponent();
 
-        helper = new StorePageHelper(((App)Application.Current).CurrentUser.Favorites, ProductGrid, this, true);
+        if (Application.Current != null && ((App)Application.Current).CurrentUser != null)
+        {
+            helper = new StorePageHelper(((App)Application.Current).CurrentUser.Favorites, ProductGrid, this, StorePageMode.Favorites);
+        }
 
-        LblSortText.Text = helper.DoSort();
-        ProductCountLabel.Text = $"{helper.ProductsList.Count} תוצאות";
+        LblSortText.Text = helper?.DoSort() ?? string.Empty;
+        ProductCountLabel.Text = $"{helper?.ProductsList?.Count ?? 0} תוצאות";
     }
 
 }

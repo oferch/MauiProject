@@ -25,11 +25,14 @@ namespace MauiProject.ViewModels
             if (u != null && u.Password == user.Password)
             {
                 user = u;
-                ((App)Application.Current).CurrentUser = u;
-                if(u.IsAdmin)
-                    Application.Current.MainPage = new AdminShell();
-                else
-                    Application.Current.MainPage = new AppShell();
+                if (Application.Current is not null)
+                {
+                    ((App)Application.Current).CurrentUser = u;
+                    if (u.IsAdmin)
+                        Application.Current.Windows[0].Page = new AdminShell();
+                    else
+                        Application.Current.Windows[0].Page = new AppShell();
+                }
             }
         }
 
@@ -43,7 +46,8 @@ namespace MauiProject.ViewModels
 
         private async Task DoSignUp()
         {
-            Application.Current.MainPage = serviceProvider.GetRequiredService<RegisterPage>();
+            if (Application.Current is not null)
+                Application.Current.Windows[0].Page = serviceProvider.GetRequiredService<RegisterPage>();
         }
 
         public bool IsPasswordNotVisible

@@ -21,7 +21,7 @@ namespace MauiProject.Services
         #endregion
 
         string DatabasePath => System.IO.Path.Combine(FileSystem.AppDataDirectory, DB_NAME);
-        SQLiteAsyncConnection connection;
+        SQLiteAsyncConnection? connection;
 
         private async Task Init()
         {
@@ -40,14 +40,18 @@ namespace MauiProject.Services
                 //await connection.CreateTableAsync<Favorite>();
                 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { 
+                Console.WriteLine(ex.Message);
+            }
         }
 
-        public async Task<User> GetUserAsync(string username)
+        public async Task<User?> GetUserAsync(string username)
         {
             try
             {
                 await Init();
+                if (connection is null)
+                    return null;
 
                 // Get user by ID first (we need the ID to use GetWithChildrenAsync)
                 var user = await connection.Table<User>()
@@ -71,6 +75,8 @@ namespace MauiProject.Services
         public async Task<List<User>> GetUsersAsync()
         {
             await Init();
+            if (connection is null)
+                return new List<User>();
             return await connection.Table<User>().ToListAsync();
         }
 
@@ -79,6 +85,8 @@ namespace MauiProject.Services
             try
             {
                 await Init();
+                if (connection is null)
+                    return false;
                 await connection.InsertAsync(user);
                 return true;
             }
@@ -92,24 +100,29 @@ namespace MauiProject.Services
         public async Task AddProductAsync(Product product)
         {
             await Init();
-            await connection.InsertAsync(product);
+            if (connection is not null)
+                await connection.InsertAsync(product);
         }
 
         public async Task UpdateUserAsync(User u)
         {
             await Init();
-            await connection.UpdateWithChildrenAsync(u);
+            if (connection is not null)
+                await connection.UpdateWithChildrenAsync(u);
         }
 
         public async Task AddFavoriteAsync(Favorite favorite)
         {
             await Init();
-            await connection.InsertAsync(favorite);
+            if (connection is not null)
+                await connection.InsertAsync(favorite);
         }
 
         public async Task<List<User>> GetUsersWithFavoritesAsync()
         {
             await Init();
+            if (connection is null)
+                return new List<User>();
             return await connection.GetAllWithChildrenAsync<User>();
         }
 
@@ -148,12 +161,16 @@ namespace MauiProject.Services
         public async Task<List<Product>> GetProductsAsync()
         {
             await Init();
+            if (connection is null)
+                return new List<Product>();
             return await connection.Table<Product>().ToListAsync();
         }
 
         public async Task<List<Favorite>> GetFavoritesAsync()
         {
             await Init();
+            if (connection is null)
+                return new List<Favorite>();
             return await connection.Table<Favorite>().ToListAsync();
         }
     }

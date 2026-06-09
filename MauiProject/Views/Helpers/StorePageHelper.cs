@@ -9,25 +9,33 @@ namespace MauiProject.Views.Helpers
 {
     public class StorePageHelper : ObservableObject
     {
+        public enum StorePageMode
+        {
+            Store,
+            Favorites,
+            Admins
+        }
         // A collection to hold our dynamic database/API data
-        public ObservableCollection<Product> ProductsList { get; set; } = new();
+        public ObservableCollection<Product>? ProductsList { get; set; } = new();
         private bool _isAscending = true;
-        private Grid ProductGrid = null;
-        private Page page = null;
-        private bool isClean = false;
+        private Grid? ProductGrid = null;
+        private Page? page = null;
+        private StorePageMode mode = StorePageMode.Store;
 
-        public StorePageHelper(ObservableCollection<Product> ProductsList, Grid ProductGrid, Page page, bool IsClean = false)
+        public StorePageHelper(ObservableCollection<Product> ProductsList, Grid ProductGrid, Page page, StorePageMode mode=StorePageMode.Store)
         {
             this.ProductsList = ProductsList;
             this.ProductsList.CollectionChanged += ProductsList_CollectionChanged;
 
             this.ProductGrid = ProductGrid;
             this.page = page;
-            this.isClean = IsClean;
+            this.mode = mode;
         }
 
         private void ProductsList_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
+            if (sender == null) return;
+
             ProductsList = sender as ObservableCollection<Product>;
             switch (e.Action)
             {
@@ -124,7 +132,7 @@ namespace MauiProject.Views.Helpers
             };
 
             // If you defined your BorderLight resource globally, you can map it:
-            if (Application.Current.Resources.TryGetValue("BorderLight", out var borderLightColor) && borderLightColor is Color color)
+            if ((Application.Current is not null &&  Application.Current.Resources.TryGetValue("BorderLight", out var borderLightColor)) && borderLightColor is Color color)
             {
                 // יצירת מברשת חלקה מהצבע שנמצא ומניעת ההתרסקות
                 cardBorder.Stroke = new SolidColorBrush(color);
@@ -159,14 +167,34 @@ namespace MauiProject.Views.Helpers
                 Margin = new Thickness(8),
                 BackgroundColor = Color.FromRgba(255, 255, 255, 204), // CCFFFFFF semi-transparent
                 CornerRadius = 16,
-                IsVisible = !isClean
             };
             favButton.Clicked += (s, e) => {
                 product.IsFavorite = !product.IsFavorite;
                 favButton.Source = product.IsFavorite ? "favorite_filled.png" : "favorite_outline.png";
                 OnPropertyChanged(nameof(ProductsList));
             };
-            imageGrid.Children.Add(favButton);
+
+            var editButton = new ImageButton
+            {
+                Source = "edit_icon.png",
+                WidthRequest = 32,
+                HeightRequest = 32,
+                HorizontalOptions = LayoutOptions.End,
+                VerticalOptions = LayoutOptions.Start,
+                Margin = new Thickness(8),
+                BackgroundColor = Color.FromRgba(0, 0, 0, 204), // CCFFFFFF semi-transparent
+                CornerRadius = 16,
+            };
+            editButton.Clicked += async (s, e) => {
+                // Handle edit button click
+                await Shell.Current.GoToAsync("//" + nameof(ProductPage) + "?id=" + product.Id);
+
+            };
+
+            if (mode == StorePageMode.Store)
+                imageGrid.Children.Add(favButton);
+            if (mode == StorePageMode.Admins)
+                imageGrid.Children.Add(editButton);
 
             mainLayout.Children.Add(imageGrid);
 
@@ -180,7 +208,7 @@ namespace MauiProject.Views.Helpers
                 LineBreakMode = LineBreakMode.TailTruncation,
                 HorizontalTextAlignment = TextAlignment.Start
             };
-            if (Application.Current.Resources.TryGetValue("TextPrimary", out var primaryColor))
+            if (Application.Current != null && Application.Current.Resources.TryGetValue("TextPrimary", out var primaryColor))
                 titleLabel.TextColor = (Color)primaryColor;
 
             var priceLabel = new Label
@@ -190,7 +218,8 @@ namespace MauiProject.Views.Helpers
                 FontAttributes = FontAttributes.Bold,
                 HorizontalTextAlignment = TextAlignment.Start
             };
-            if (Application.Current.Resources.TryGetValue("PrimaryBlue", out var brandColor))
+            Object? brandColor = null;
+            if (Application.Current != null && Application.Current.Resources.TryGetValue("PrimaryBlue", out brandColor))
                 priceLabel.TextColor = (Color)brandColor;
 
             var addToCartButton = new Button
@@ -200,7 +229,7 @@ namespace MauiProject.Views.Helpers
                 CornerRadius = 8,
                 FontSize = 12,
                 TextColor = Colors.White,
-                IsVisible = !isClean
+                IsVisible = (mode == StorePageMode.Store)
             };
             if (brandColor != null) addToCartButton.BackgroundColor = (Color)brandColor;
 

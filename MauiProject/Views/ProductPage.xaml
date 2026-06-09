@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiProject.Views.ProductPage"
+             BackgroundColor="#F9F9FF"
+             Title="Edit Product"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto, *">
+
+        <Border Grid.Row="0" BackgroundColor="#F9F9FF" HeightRequest="56" StrokeThickness="0" Padding="20,0">
+            <Grid ColumnDefinitions="Auto, *, Auto">
+                <HorizontalStackLayout Grid.Column="0" Spacing="12" VerticalOptions="Center">
+                    <ImageButton Source="arrow_back_icon.png" WidthRequest="24" HeightRequest="24" BackgroundColor="Transparent" Clicked="OnBackClicked"/>
+                    <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                        <Image Source="shopease_logo.png" WidthRequest="32" HeightRequest="32"/>
+                        <Label Text="ShopEase" FontSize="24" FontAttributes="Bold" TextColor="#004AC6" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Grid.Column="2" Spacing="16" VerticalOptions="Center">
+                    <Border Stroke="#C3C6D7" StrokeThickness="1" StrokeShape="RoundRectangle 99" Padding="12,4" BackgroundColor="Transparent">
+                        <Label Text="Admin Mode" FontSize="14" TextColor="#737686" FontAttributes="Bold" VerticalOptions="Center"/>
+                    </Border>
+                    <ImageButton Source="shopping_cart_icon.png" WidthRequest="24" HeightRequest="24" BackgroundColor="Transparent"/>
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+
+        <ScrollView Grid.Row="1" Orientation="Vertical" VerticalScrollBarVisibility="Never">
+            <Grid RowDefinitions="Auto, Auto, *, Auto">
+
+                <BoxView Grid.Row="0" Grid.RowSpan="3" HeightRequest="320" VerticalOptions="Start">
+                    <BoxView.Background>
+                        <LinearGradientBrush EndPoint="0,1">
+                            <GradientStop Color="#E7EEFE" Offset="0.0" />
+                            <GradientStop Color="#F9F9FF" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </BoxView.Background>
+                </BoxView>
+
+                <VerticalStackLayout Grid.Row="0" Padding="20,24,20,16" Spacing="4">
+                    <Label Text="Edit Product" FontSize="28" FontAttributes="Bold" TextColor="#151C27"/>
+                    <Label Text="Configure your product details and availability." FontSize="16" TextColor="#434655"/>
+                </VerticalStackLayout>
+
+                <Border Grid.Row="1" Margin="20,0,20,16" BackgroundColor="#F0F3FF" Stroke="#102563EB" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="16">
+                    <Grid ColumnDefinitions="Auto, *">
+                        <Image Grid.Column="0" Source="auto_awesome_icon.png" WidthRequest="24" HeightRequest="24" Margin="0,0,12,0" VerticalOptions="Start"/>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Text="Architecture Hint" FontSize="12" FontAttributes="Bold" TextColor="#004AC6"/>
+                            <Label Text="Use ProductViewModel with ObservableProperty for data-binding. Map these fields to your IProductRepository for persistence." FontSize="12" TextColor="#434655"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Row="2" Padding="20,0,20,40" RowDefinitions="Auto, Auto, Auto" RowSpacing="16">
+
+                    <Border Grid.Row="0" BackgroundColor="#CCFFFFFF" Stroke="#80FFFFFF" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="16">
+                        <VerticalStackLayout Spacing="16">
+                            <VerticalStackLayout Spacing="8">
+                                <Label Text="Product Name" FontSize="14" FontAttributes="Bold" TextColor="#434655"/>
+                                <Border Stroke="#C3C6D7" StrokeThickness="1" StrokeShape="RoundRectangle 8" BackgroundColor="White" HeightRequest="48" Padding="12,0">
+                                    <Entry Text="{Binding ProductName}" TextColor="#151C27" VerticalOptions="Center"/>
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Spacing="8">
+                                <Label Text="Description" FontSize="14" FontAttributes="Bold" TextColor="#434655"/>
+                                <Border Stroke="#C3C6D7" StrokeThickness="1" StrokeShape="RoundRectangle 8" BackgroundColor="White" Padding="12">
+                                    <Editor Text="{Binding Description}" TextColor="#151C27" HeightRequest="144" AutoSize="Disabled"/>
+                                </Border>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Row="1" BackgroundColor="#CCFFFFFF" Stroke="#80FFFFFF" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="16">
+                        <Grid ColumnDefinitions="*, *" ColumnSpacing="16">
+                            <VerticalStackLayout Grid.Column="0" Spacing="8">
+                                <Label Text="Category" FontSize="14" FontAttributes="Bold" TextColor="#434655"/>
+                                <Border Stroke="#C3C6D7" StrokeThickness="1" StrokeShape="RoundRectangle 8" BackgroundColor="White" HeightRequest="48" Padding="12,0">
+                                    <Picker SelectedItem="{Binding SelectedCategory}" ItemsSource="{Binding Categories}" TextColor="#151C27" Title="Select Category" VerticalOptions="Center"/>
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="1" Spacing="8">
+                                <Label Text="Price ($)" FontSize="14" FontAttributes="Bold" TextColor="#434655"/>
+                                <Border Stroke="#C3C6D7" StrokeThickness="1" StrokeShape="RoundRectangle 8" BackgroundColor="White" HeightRequest="48" Padding="12,0">
+                                    <Entry Text="{Binding Price}" Keyboard="Numeric" TextColor="#151C27" VerticalOptions="Center"/>
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="2" BackgroundColor="#CCFFFFFF" Stroke="#80FFFFFF" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="16">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="Product Image" FontSize="14" FontAttributes="Bold" TextColor="#434655"/>
+
+                            <Border Stroke="#C3C6D7" StrokeThickness="2" StrokeDashArray="4,4" StrokeShape="RoundRectangle 8" BackgroundColor="#F0F3FF" HeightRequest="220" Padding="0">
+                                <Grid>
+                                    <Image Source="{Binding ProductImageUrl}" Aspect="AspectFill"/>
+
+                                    <Grid BackgroundColor="#66004AC6">
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ChangeImageCommand}"/>
+                                        </Grid.GestureRecognizers>
+                                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
+                                            <Image Source="upload_file_white_icon.png" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center"/>
+                                            <Label Text="Change Image" FontSize="14" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center"/>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+                    </Border>
+
+                </Grid>
+
+                <Border Grid.Row="3" BackgroundColor="White" StrokeThickness="1" Stroke="#E2E8F8" StrokeShape="RoundRectangle 16,16,0,0" Padding="20,16">
+                    <VerticalStackLayout Spacing="12">
+                        <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
+                            <Button Grid.Column="0" Text="Save Product" ImageSource="save_white_icon.png" ContentLayout="Left,8" BackgroundColor="#004AC6" TextColor="White" HeightRequest="52" CornerRadius="8" FontAttributes="Bold" Command="{Binding SaveProductCommand}"/>
+
+                            <Button Grid.Column="1" Text="Discard Changes" ImageSource="close_dark_icon.png" ContentLayout="Left,8" BackgroundColor="Transparent" TextColor="#434655" BorderColor="#737686" BorderWidth="1" HeightRequest="52" CornerRadius="8" FontAttributes="Bold" Command="{Binding DiscardChangesCommand}"/>
+                        </Grid>
+
+                        <Button Text="Delete Listing" ImageSource="delete_red_icon.png" ContentLayout="Left,8" BackgroundColor="Transparent" TextColor="#BA1A1A" HeightRequest="48" CornerRadius="8" FontAttributes="Bold" HorizontalOptions="Center" Command="{Binding DeleteListingCommand}"/>
+                    </VerticalStackLayout>
+                </Border>
+
+            </Grid>
+        </ScrollView>
+    </Grid>
+</ContentPage>
