@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Core.Extensions;
 using MauiProject.Models;
+using Microsoft.Maui.Graphics.Text;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,7 +23,9 @@ namespace MauiProject.Views.Helpers
         private Page? page = null;
         private StorePageMode mode = StorePageMode.Store;
 
-        public StorePageHelper(ObservableCollection<Product> ProductsList, Grid ProductGrid, Page page, StorePageMode mode=StorePageMode.Store)
+        private HorizontalStackLayout categoryStackLayout;
+
+        public StorePageHelper(ObservableCollection<Product> ProductsList, List<Category> Categories, Grid ProductGrid, HorizontalStackLayout CategoryStackLayout, Page page, StorePageMode mode=StorePageMode.Store)
         {
             this.ProductsList = ProductsList;
             this.ProductsList.CollectionChanged += ProductsList_CollectionChanged;
@@ -30,6 +33,28 @@ namespace MauiProject.Views.Helpers
             this.ProductGrid = ProductGrid;
             this.page = page;
             this.mode = mode;
+            this.categoryStackLayout = CategoryStackLayout;
+
+            Application.Current.Resources.TryGetValue("PrimaryBlue", out var colorValue);
+
+            foreach (var category in Categories)
+            {
+                var categoryButton = new Button
+                {
+                    Text = category.Name,
+                    HeightRequest = 38,
+                    CornerRadius = 20,
+                    FontSize = 12,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = Colors.White,
+                    Padding = new Thickness(20, 0),
+                    BackgroundColor = (Color)colorValue
+                };
+
+                categoryStackLayout.Children.Add(categoryButton);
+
+            }
+
         }
 
         private void ProductsList_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -71,12 +96,12 @@ namespace MauiProject.Views.Helpers
             if (_isAscending)
             {
                 ProductsList = ProductsList.OrderBy(p => p.Price).ToObservableCollection();
-                text = "מיון: מהנמוך לגבוה";
+                text = "Sort: Low to High";
             }
             else
             {
                 ProductsList = ProductsList.OrderByDescending(p => p.Price).ToObservableCollection();
-                text = "מיון: מהגבוה לנמוך";
+                text = "Sort: High to Low";
             }
 
             // 2. בנייה מחדש של ה-Grid הויזואלי עם הרשימה הממוינת החדשה
@@ -187,8 +212,7 @@ namespace MauiProject.Views.Helpers
             };
             editButton.Clicked += async (s, e) => {
                 // Handle edit button click
-                await Shell.Current.GoToAsync("//" + nameof(ProductPage) + "?id=" + product.Id);
-
+                await Shell.Current.GoToAsync("//StorePage/UpdateProductPage?id=" + product.Id);
             };
 
             if (mode == StorePageMode.Store)

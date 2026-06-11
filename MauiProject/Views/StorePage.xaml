@@ -20,19 +20,19 @@
             <Grid Grid.Row="1" Padding="20,16,20,8">
                 <Border Stroke="{StaticResource BorderLight}" StrokeShape="RoundRectangle 8" StrokeThickness="1" HeightRequest="48" BackgroundColor="White">
                     <Grid ColumnDefinitions="*, Auto" Padding="12,0">
-                        <Entry x:Name="SearchInput" Placeholder="חיפוש מוצרים..." HorizontalTextAlignment="Start" VerticalOptions="Center"/>
+                        <Entry x:Name="SearchInput" Placeholder="Search products..." HorizontalTextAlignment="Start" VerticalOptions="Center"/>
                         <Image Grid.Column="1" Source="search_icon.png" WidthRequest="20" HeightRequest="20" VerticalOptions="Center"/>
                     </Grid>
                 </Border>
             </Grid>
 
             <ScrollView Grid.Row="2" Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Padding="20,8">
-                <HorizontalStackLayout Spacing="8">
-                    <Button Text="הכל" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" CornerRadius="20" Padding="20,0" HeightRequest="38" FontAttributes="Bold"/>
-                    <Button Text="אלקטרוניקה" BackgroundColor="{StaticResource BorderLight}" TextColor="{StaticResource TextSecondary}" CornerRadius="20" Padding="20,0" HeightRequest="38"/>
-                    <Button Text="לבית" BackgroundColor="{StaticResource BorderLight}" TextColor="{StaticResource TextSecondary}" CornerRadius="20" Padding="20,0" HeightRequest="38"/>
-                    <Button Text="ביגוד" BackgroundColor="{StaticResource BorderLight}" TextColor="{StaticResource TextSecondary}" CornerRadius="20" Padding="20,0" HeightRequest="38"/>
-                    <Button Text="ספורט" BackgroundColor="{StaticResource BorderLight}" TextColor="{StaticResource TextSecondary}" CornerRadius="20" Padding="20,0" HeightRequest="38"/>
+                <HorizontalStackLayout Spacing="8" x:Name="CategoryStackLayout">
+                    <!--Button Text="All" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" CornerRadius="20" Padding="20,0" HeightRequest="38" FontAttributes="Bold"/>
+                    <Button Text="Electronics" BackgroundColor="{StaticResource BorderLight}" TextColor="{StaticResource TextSecondary}" CornerRadius="20" Padding="20,0" HeightRequest="38"/>
+                    <Button Text="Home" BackgroundColor="{StaticResource BorderLight}" TextColor="{StaticResource TextSecondary}" CornerRadius="20" Padding="20,0" HeightRequest="38"/>
+                    <Button Text="Clothing" BackgroundColor="{StaticResource BorderLight}" TextColor="{StaticResource TextSecondary}" CornerRadius="20" Padding="20,0" HeightRequest="38"/>
+                    <Button Text="Sports" BackgroundColor="{StaticResource BorderLight}" TextColor="{StaticResource TextSecondary}" CornerRadius="20" Padding="20,0" HeightRequest="38"/-->
                 </HorizontalStackLayout>
             </ScrollView>
 
@@ -42,7 +42,7 @@
                     <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnSortClicked" />
                     </HorizontalStackLayout.GestureRecognizers>
-                    <Label x:Name="LblSortText" Text="מיון: מהנמוך לגבוה" FontSize="14" TextColor="{StaticResource PrimaryBlue}" VerticalOptions="Center"/>
+                    <Label x:Name="LblSortText" Text="Sort: Low to High" FontSize="14" TextColor="{StaticResource PrimaryBlue}" VerticalOptions="Center"/>
                     <Image Source="arrow_down_up.png" WidthRequest="18" HeightRequest="18" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
             </Grid>

@@ -60,6 +60,14 @@ namespace MauiProject.Models
                 }
             }
         }
+
+
+        [ForeignKey(typeof(Category))]
+        public int CategoryId { get; set; }
+
+        [ManyToOne]
+        public Category? Category { get; set; } = null;
+
         public bool IsFavorite { get => isFavorite;
             set
             {

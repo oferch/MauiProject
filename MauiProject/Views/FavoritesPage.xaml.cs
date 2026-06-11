@@ -13,7 +13,7 @@ public partial class FavoritesPage : ContentPage
 
         if (Application.Current != null && ((App)Application.Current).CurrentUser != null)
         {
-            helper = new StorePageHelper(((App)Application.Current).CurrentUser.Favorites, ProductGrid, this, StorePageMode.Favorites);
+            helper = new StorePageHelper(((App)Application.Current).CurrentUser.Favorites, ((App)Application.Current).Categories, ProductGrid, CategoryStackLayout, this, StorePageHelper.StorePageMode.Favorites);
         }
 
         LblSortText.Text = helper?.DoSort() ?? string.Empty;

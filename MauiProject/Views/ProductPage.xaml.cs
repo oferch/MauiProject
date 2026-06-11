@@ -12,6 +12,6 @@ public partial class ProductPage : ContentPage
     private async void OnBackClicked(object sender, EventArgs e)
     {
         // Back navigation handling sequence
-        await Shell.Current.GoToAsync("..");
+        //await Shell.Current.GoToAsync("..");
     }
 }

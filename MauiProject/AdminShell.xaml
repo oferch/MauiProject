@@ -16,7 +16,7 @@
          Icon="product.png"
         Title="Products"
         ContentTemplate="{DataTemplate local:Views.ProductPage}"
-        Route="ProductPage" />        
+        Route="ProductPage" />
         <ShellContent
             Icon="profile.png"
         Title="Profile"

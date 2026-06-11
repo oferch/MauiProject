@@ -19,9 +19,9 @@
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout Grid.Column="2" Spacing="16" VerticalOptions="Center">
-                    <Border Stroke="#C3C6D7" StrokeThickness="1" StrokeShape="RoundRectangle 99" Padding="12,4" BackgroundColor="Transparent">
+                    <!--Border Stroke="#C3C6D7" StrokeThickness="1" StrokeShape="RoundRectangle 99" Padding="12,4" BackgroundColor="Transparent">
                         <Label Text="Admin Mode" FontSize="14" TextColor="#737686" FontAttributes="Bold" VerticalOptions="Center"/>
-                    </Border>
+                    </Border-->
                     <ImageButton Source="shopping_cart_icon.png" WidthRequest="24" HeightRequest="24" BackgroundColor="Transparent"/>
                 </HorizontalStackLayout>
             </Grid>
@@ -44,7 +44,7 @@
                     <Label Text="Configure your product details and availability." FontSize="16" TextColor="#434655"/>
                 </VerticalStackLayout>
 
-                <Border Grid.Row="1" Margin="20,0,20,16" BackgroundColor="#F0F3FF" Stroke="#102563EB" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="16">
+                <!--Border Grid.Row="1" Margin="20,0,20,16" BackgroundColor="#F0F3FF" Stroke="#102563EB" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="16">
                     <Grid ColumnDefinitions="Auto, *">
                         <Image Grid.Column="0" Source="auto_awesome_icon.png" WidthRequest="24" HeightRequest="24" Margin="0,0,12,0" VerticalOptions="Start"/>
                         <VerticalStackLayout Grid.Column="1" Spacing="2">
@@ -52,7 +52,7 @@
                             <Label Text="Use ProductViewModel with ObservableProperty for data-binding. Map these fields to your IProductRepository for persistence." FontSize="12" TextColor="#434655"/>
                         </VerticalStackLayout>
                     </Grid>
-                </Border>
+                </Border-->
 
                 <Grid Grid.Row="2" Padding="20,0,20,40" RowDefinitions="Auto, Auto, Auto" RowSpacing="16">
 
@@ -121,7 +121,7 @@
                         <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
                             <Button Grid.Column="0" Text="Save Product" ImageSource="save_white_icon.png" ContentLayout="Left,8" BackgroundColor="#004AC6" TextColor="White" HeightRequest="52" CornerRadius="8" FontAttributes="Bold" Command="{Binding SaveProductCommand}"/>
 
-                            <Button Grid.Column="1" Text="Discard Changes" ImageSource="close_dark_icon.png" ContentLayout="Left,8" BackgroundColor="Transparent" TextColor="#434655" BorderColor="#737686" BorderWidth="1" HeightRequest="52" CornerRadius="8" FontAttributes="Bold" Command="{Binding DiscardChangesCommand}"/>
+                            <Button Grid.Column="1" Text="Discard Changes" ImageSource="close_dark_icon.png" ContentLayout="Left,8" BackgroundColor="Transparent" TextColor="#434655" BorderColor="#737686" BorderWidth="1" HeightRequest="52" CornerRadius="8" FontAttributes="Bold" Clicked="OnBackClicked" Command="{Binding DiscardChangesCommand}"/>
                         </Grid>
 
                         <Button Text="Delete Listing" ImageSource="delete_red_icon.png" ContentLayout="Left,8" BackgroundColor="Transparent" TextColor="#BA1A1A" HeightRequest="48" CornerRadius="8" FontAttributes="Bold" HorizontalOptions="Center" Command="{Binding DeleteListingCommand}"/>

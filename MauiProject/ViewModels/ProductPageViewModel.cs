@@ -6,16 +6,16 @@ using System.Windows.Input;
 
 namespace MauiProject.ViewModels
     {
-    [QueryProperty(nameof(ProductID), "id")]
     public class ProductPageViewModel : ObservableObject, IQueryAttributable
     {
-        private string _productName = "AeroComfort Pro 2024";
-        private string _description = "The AeroComfort Pro 2024 combines high-grade breathable mesh with an adaptive lumbar support system. Designed for 8+ hours of continuous use, it features 4D adjustable armrests and a silent multi-position tilt mechanism.";
-        private string _selectedCategory = "Office Furniture";
-        private string _price = "299.99";
-        private string _productImageUrl = "ergonomic_chair_studio.png";
+        private string _productName = "";
+        private string _description = " ";
+        private string _selectedCategory = "";
+        private string _price = "";
+        private string _productImageUrl = "";
         private IDBStore dbStore;
         private int _productId;
+        private Task loadCats;
 
         public ObservableCollection<string> Categories { get; set; }
 
@@ -61,27 +61,33 @@ namespace MauiProject.ViewModels
         public ICommand DeleteListingCommand { get; }
         public ICommand ChangeImageCommand { get; }
 
+
         public ProductPageViewModel(IDBStore dbStore)
         {
-            // Populate list items collection context 
-            Categories = new ObservableCollection<string>
-            {
-                "Office Furniture",
-                "Electronics",
-                "Home Decor"
-            };
-
             // Implement interactive operational event routing handlers
             SaveProductCommand = new Command(ExecuteSaveProduct);
             DiscardChangesCommand = new Command(ExecuteDiscardChanges);
             DeleteListingCommand = new Command(ExecuteDeleteListing);
             ChangeImageCommand = new Command(ExecuteChangeImage);
+            this.dbStore = dbStore;
+            Categories = new ObservableCollection<string>(((App)Application.Current).Categories.Select(c => c.Name)); 
         }
 
         private async void ExecuteSaveProduct()
         {
+            await dbStore.UpdateProductAsync(new Product
+            {
+                Id = ProductID,
+                Name = ProductName,
+                Description = Description,
+                Price = double.TryParse(Price, out var price) ? price : 0,
+                ImageUrl = ProductImageUrl,
+                CategoryId = ((App)Application.Current).Categories.FirstOrDefault(c => c.Name == SelectedCategory)?.Id ?? -1,
+                Category = ((App)Application.Current).Categories.FirstOrDefault(c => c.Name == SelectedCategory)
+            });
             // Add persistence service tracking infrastructure routines here
             await Application.Current.MainPage.DisplayAlert("Admin Portal", $"Product '{ProductName}' has been successfully updated.", "OK");
+            await Shell.Current.GoToAsync("..");
         }
 
         private async void ExecuteDiscardChanges()
@@ -89,9 +95,12 @@ namespace MauiProject.ViewModels
             bool reset = await Application.Current.MainPage.DisplayAlert("Confirmation", "Are you sure you want to revert all current pending field modifications?", "Yes", "No");
             if (reset)
             {
-                ProductName = "AeroComfort Pro 2024";
-                Price = "299.99";
-                SelectedCategory = "Office Furniture";
+                ProductName = "";
+                Price = "";
+                SelectedCategory = "";
+                ProductImageUrl = "";
+                await Shell.Current.GoToAsync("..");
+
             }
         }
 
@@ -100,7 +109,8 @@ namespace MauiProject.ViewModels
             bool deleteConfirmed = await Application.Current.MainPage.DisplayAlert("Destructive Warning", "This operation is permanent. Delete item from database repository catalog immediately?", "Delete", "Cancel");
             if (deleteConfirmed)
             {
-                // Execute execution delete pipeline parameters
+                await dbStore.DeleteProductAsync(ProductID);
+                await Shell.Current.GoToAsync("..");
             }
         }
 
@@ -120,11 +130,20 @@ namespace MauiProject.ViewModels
             }
         }
 
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        public async void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             if (query.TryGetValue("id", out var id))
             {
                 ProductID = Convert.ToInt32(id);
+                Product product = await dbStore.GetProductAsync(ProductID);
+                if (product != null)
+                {
+                    ProductName = product.Name;
+                    Description = product.Description;
+                    SelectedCategory = product.Category.Name;
+                    Price = product.Price.ToString();
+                    ProductImageUrl = product.ImageUrl;
+                }
             }
         }
     }

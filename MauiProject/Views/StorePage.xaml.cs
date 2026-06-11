@@ -1,5 +1,6 @@
 using CommunityToolkit.Maui.Core.Extensions;
 using MauiProject.Models;
+using MauiProject.Services;
 using MauiProject.ViewModels;
 using MauiProject.Views.Helpers;
 
@@ -11,11 +12,11 @@ public partial class StorePage : ContentPage
     private StorePageHelper? helper;
 
 
-    public StorePage(StorePageViewModel vm)
+    public StorePage(StorePageViewModel vm, IDBStore dbStore)
     {
         InitializeComponent();
         BindingContext = vm;
-        loadData = LoadProductsDataAsync(vm);
+        loadData = LoadProductsDataAsync(vm, dbStore);
       //  ProductsList = vm.Products;
 
         // 1. Load mock data matching your catalog requirements
@@ -25,16 +26,17 @@ public partial class StorePage : ContentPage
       //  PopulateProductGrid();
     }
 
-    private async Task? LoadProductsDataAsync(StorePageViewModel vm)
+    private async Task? LoadProductsDataAsync(StorePageViewModel vm, IDBStore dbStore)
     {
         if (Application.Current != null && ((App)Application.Current).CurrentUser != null)
         {
             await vm.LoadAsyncProductsData(((App)Application.Current).CurrentUser);
+            var categories = await dbStore.GetCategoriesAsync();
 
             if (!((App)Application.Current).CurrentUser.IsAdmin)
-                helper = new StorePageHelper(vm.Products.ToObservableCollection(), ProductGrid, this);
+                helper = new StorePageHelper(vm.Products.ToObservableCollection(), categories, ProductGrid, CategoryStackLayout,  this);
             else
-                helper = new StorePageHelper(vm.Products.ToObservableCollection(), ProductGrid, this, StorePageHelper.StorePageMode.Admins);
+                helper = new StorePageHelper(vm.Products.ToObservableCollection(), categories, ProductGrid, CategoryStackLayout, this, StorePageHelper.StorePageMode.Admins);
             ProductCountLabel.Text = $"נמצאו {vm.Products.Count} מוצרים";
 
             LblSortText.Text = helper.DoSort();

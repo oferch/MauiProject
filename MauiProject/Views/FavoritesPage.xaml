@@ -27,7 +27,7 @@
             </Grid>
 
             <ScrollView Grid.Row="2" Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Padding="20,8">
-                <HorizontalStackLayout Spacing="8">
+                <HorizontalStackLayout Spacing="8" x:Name="CategoryStackLayout">
                     <Button Text="הכל" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" CornerRadius="20" Padding="20,0" HeightRequest="38" FontAttributes="Bold"/>
                     <Button Text="אלקטרוניקה" BackgroundColor="{StaticResource BorderLight}" TextColor="{StaticResource TextSecondary}" CornerRadius="20" Padding="20,0" HeightRequest="38"/>
                     <Button Text="לבית" BackgroundColor="{StaticResource BorderLight}" TextColor="{StaticResource TextSecondary}" CornerRadius="20" Padding="20,0" HeightRequest="38"/>

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MauiProject.Models;
 using SQLite;
 using SQLiteNetExtensionsAsync.Extensions;
-using MauiProject.Models;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace MauiProject.Services
 {
@@ -30,15 +30,17 @@ namespace MauiProject.Services
             try
             {
                 connection = new SQLiteAsyncConnection(DatabasePath, flags);
+#if REFRESH_DATA
+                await connection.DropTableAsync<Favorite>();
+                await connection.DropTableAsync<User>();
+                await connection.DropTableAsync<Product>();
+                await connection.DropTableAsync<Category>();
 
-                //await connection.DropTableAsync<Favorite>();
-                //await connection.DropTableAsync<User>();
-                //await connection.DropTableAsync<Product>();
-
-                //await connection.CreateTableAsync<User>();
-                //await connection.CreateTableAsync<Product>();
-                //await connection.CreateTableAsync<Favorite>();
-                
+                await connection.CreateTableAsync<User>();
+                await connection.CreateTableAsync<Product>();
+                await connection.CreateTableAsync<Category>();
+                await connection.CreateTableAsync<Favorite>();
+#endif
             }
             catch (Exception ex) { 
                 Console.WriteLine(ex.Message);
@@ -72,6 +74,19 @@ namespace MauiProject.Services
             }
         }
 
+        public async Task<Product> GetProductAsync(int ProductID)
+        {
+            await Init();
+            if (connection is null)
+                return new Product();
+            var prod = await connection.Table<Product>().Where(p => p.Id == ProductID).FirstOrDefaultAsync();
+            if (prod is not null)
+            {
+                prod = await connection.GetWithChildrenAsync<Product>(prod.Id, recursive: true);
+            }
+            return prod;
+        }
+
         public async Task<List<User>> GetUsersAsync()
         {
             await Init();
@@ -97,12 +112,32 @@ namespace MauiProject.Services
             }
         }
 
+
         public async Task AddProductAsync(Product product)
         {
             await Init();
             if (connection is not null)
                 await connection.InsertAsync(product);
         }
+
+        public async Task UpdateProductAsync(Product product)
+        {
+            await Init();
+
+            if (product.CategoryId == -1)
+                product.CategoryId = product.Category?.Id ?? -1;
+
+            if (connection is not null)
+                await connection.UpdateWithChildrenAsync(product);
+        }
+
+        public async Task DeleteProductAsync(int productID)
+        {
+            await Init();
+            if (connection is not null)
+                await connection.DeleteAsync(await connection.Table<Product>().Where(p => p.Id == productID).FirstOrDefaultAsync());
+        }
+
 
         public async Task UpdateUserAsync(User u)
         {
@@ -130,14 +165,21 @@ namespace MauiProject.Services
         {
             await Init();
 
+            var category1 = new Category { Name = "Sports" };
+            await connection.InsertWithChildrenAsync(category1);
+            var category2 = new Category { Name = "Elegant" };
+            await connection.InsertWithChildrenAsync(category2);
+            var category3 = new Category { Name = "Snickers" };
+            await connection.InsertWithChildrenAsync(category3);
+
 
             var user = new User {FirstName = "John", LastName = "Doe", UserName = "johndoe", Password = "password", PhoneNumber = "123-456-7890", DateOfBirth=DateTime.Parse("12/12/2000"), IsAdmin = false };
             var user2 = new User { FirstName = "master", LastName = "Admin", UserName = "admin", Password = "admin", PhoneNumber = "098-765-4321", DateOfBirth=DateTime.Parse("10/10/2000"), IsAdmin = true };
-            var product1 = new Product {  Name = "Product 1", Description = "Description for Product 1", Price = 9.99, ImageUrl= "product10.png"};
-            var product2 = new Product { Name = "Product 2", Description = "Description for Product 2", Price = 19.99, ImageUrl= "product12.png" };
+            var product1 = new Product {  Name = "Product 1", Description = "Description for Product 1", Price = 9.99, ImageUrl= "product10.png", Category = category1, CategoryId = category1.Id };
+            var product2 = new Product { Name = "Product 2", Description = "Description for Product 2", Price = 19.99, ImageUrl= "product12.png", Category = category1, CategoryId = category1.Id };
             for (int i = 0; i < 10; i++)
             {
-                var product = new Product { Name = $"Product {i + 3}", Description = $"Description for Product {i + 3}", Price = 9.99 + i, ImageUrl= $"product{i}.png" };
+                var product = new Product { Name = $"Product {i + 3}", Description = $"Description for Product {i + 3}", Price = 9.99 + i, ImageUrl= $"product{i}.png", Category = category1, CategoryId = category1.Id };
                 await connection.InsertWithChildrenAsync(product);
             }
 
@@ -166,6 +208,8 @@ namespace MauiProject.Services
             return await connection.Table<Product>().ToListAsync();
         }
 
+
+
         public async Task<List<Favorite>> GetFavoritesAsync()
         {
             await Init();
@@ -173,5 +217,14 @@ namespace MauiProject.Services
                 return new List<Favorite>();
             return await connection.Table<Favorite>().ToListAsync();
         }
+
+        public async Task<List<Category>> GetCategoriesAsync()
+        {
+            await Init();
+            if (connection is null)
+                return new List<Category>();
+            return await connection.Table<Category>().ToListAsync();
+        }
+
     }
 }

@@ -11,7 +11,11 @@ namespace MauiProject.Services
         public Task<bool> AddUserAsync(User user);
         public Task<List<Product>> GetProductsAsync();
         public Task UpdateUserAsync(User u);
+        public Task<Product> GetProductAsync(int ProductID);
 
+        public Task<List<Category>> GetCategoriesAsync();
 
+        public Task UpdateProductAsync(Product product);
+        public Task DeleteProductAsync(int productID);
     }
 }

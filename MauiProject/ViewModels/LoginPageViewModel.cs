@@ -28,6 +28,9 @@ namespace MauiProject.ViewModels
                 if (Application.Current is not null)
                 {
                     ((App)Application.Current).CurrentUser = u;
+                    var categories = await dbStore.GetCategoriesAsync();
+                    ((App)Application.Current).Categories = categories;
+
                     if (u.IsAdmin)
                         Application.Current.Windows[0].Page = new AdminShell();
                     else
