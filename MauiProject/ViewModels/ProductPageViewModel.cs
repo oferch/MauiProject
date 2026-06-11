@@ -14,7 +14,7 @@ namespace MauiProject.ViewModels
         private string _price = "";
         private string _productImageUrl = "";
         private IDBStore dbStore;
-        private int _productId;
+        private int _productId = 1;
         private Task loadCats;
 
         public ObservableCollection<string> Categories { get; set; }
@@ -75,16 +75,33 @@ namespace MauiProject.ViewModels
 
         private async void ExecuteSaveProduct()
         {
-            await dbStore.UpdateProductAsync(new Product
+            if (ProductID == -1)
             {
-                Id = ProductID,
-                Name = ProductName,
-                Description = Description,
-                Price = double.TryParse(Price, out var price) ? price : 0,
-                ImageUrl = ProductImageUrl,
-                CategoryId = ((App)Application.Current).Categories.FirstOrDefault(c => c.Name == SelectedCategory)?.Id ?? -1,
-                Category = ((App)Application.Current).Categories.FirstOrDefault(c => c.Name == SelectedCategory)
-            });
+
+                await dbStore.AddProductAsync(new Product
+                {
+                    Id = 0,
+                    Name = ProductName,
+                    Description = Description,
+                    Price = double.TryParse(Price, out var price) ? price : 0,
+                    ImageUrl = ProductImageUrl,
+                    CategoryId = ((App)Application.Current).Categories.FirstOrDefault(c => c.Name == SelectedCategory)?.Id ?? -1,
+                    Category = ((App)Application.Current).Categories.FirstOrDefault(c => c.Name == SelectedCategory)
+                });
+            }
+            else
+            {
+                await dbStore.UpdateProductAsync(new Product
+                {
+                    Id = ProductID,
+                    Name = ProductName,
+                    Description = Description,
+                    Price = double.TryParse(Price, out var price) ? price : 0,
+                    ImageUrl = ProductImageUrl,
+                    CategoryId = ((App)Application.Current).Categories.FirstOrDefault(c => c.Name == SelectedCategory)?.Id ?? -1,
+                    Category = ((App)Application.Current).Categories.FirstOrDefault(c => c.Name == SelectedCategory)
+                });
+            }
             // Add persistence service tracking infrastructure routines here
             await Application.Current.MainPage.DisplayAlert("Admin Portal", $"Product '{ProductName}' has been successfully updated.", "OK");
             await Shell.Current.GoToAsync("..");

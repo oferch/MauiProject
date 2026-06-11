@@ -37,7 +37,7 @@ public partial class StorePage : ContentPage
                 helper = new StorePageHelper(vm.Products.ToObservableCollection(), categories, ProductGrid, CategoryStackLayout,  this);
             else
                 helper = new StorePageHelper(vm.Products.ToObservableCollection(), categories, ProductGrid, CategoryStackLayout, this, StorePageHelper.StorePageMode.Admins);
-            ProductCountLabel.Text = $"נמצאו {vm.Products.Count} מוצרים";
+            ProductCountLabel.Text = $"Found {vm.Products.Count} Products";
 
             LblSortText.Text = helper.DoSort();
         }

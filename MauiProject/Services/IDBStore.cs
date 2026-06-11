@@ -17,5 +17,8 @@ namespace MauiProject.Services
 
         public Task UpdateProductAsync(Product product);
         public Task DeleteProductAsync(int productID);
+
+        public  Task AddProductAsync(Product product);
+
     }
 }

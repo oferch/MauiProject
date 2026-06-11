@@ -117,7 +117,7 @@ namespace MauiProject.Services
         {
             await Init();
             if (connection is not null)
-                await connection.InsertAsync(product);
+                await connection.InsertWithChildrenAsync(product);
         }
 
         public async Task UpdateProductAsync(Product product)
