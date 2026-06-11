@@ -19,6 +19,7 @@ namespace MauiProject.Models
         private string email = "";
         private string phoneNumber = "";
         private bool isAdmin = false;
+        private string imageUrl = "";
         private DateTime dateOfBirth = DateTime.Now;
 
 
@@ -114,6 +115,19 @@ namespace MauiProject.Models
                 if (dateOfBirth != value)
                 {
                     dateOfBirth = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string ImageUrl
+        {
+            get => imageUrl;
+            set
+            {
+                if (imageUrl != value)
+                {
+                    imageUrl = value;
                     OnPropertyChanged();
                 }
             }

@@ -10,18 +10,17 @@ namespace MauiProject.ViewModels
 {
     public class ProfilePageViewModel : ObservableObject
     {
-        public User user = new User() { Id = 0, FirstName = "", LastName = "", Password = "", UserName = "", Email = "", PhoneNumber = "" };
+        public User user = new User() { Id = 0, FirstName = "", LastName = "", Password = "", UserName = "", Email = "", PhoneNumber = "", ImageUrl = "" };
 
-        private string profileImage;
         private IDBStore db;
         private int age;
 
-        public string ProfileImage { get => profileImage;
+        public string ProfileImage { get => user.ImageUrl;
             set
             {
-                if (profileImage != value)
+                if (user.ImageUrl != value)
                 {
-                    profileImage = value;
+                    user.ImageUrl = value;
                     OnPropertyChanged();
                 }
             }
